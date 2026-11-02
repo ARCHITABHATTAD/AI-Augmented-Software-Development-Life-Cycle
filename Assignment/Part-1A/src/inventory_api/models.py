@@ -25,6 +25,7 @@ class ItemFields(BaseModel):
             return value.strip()
         return value
 
+
     @field_validator("name", "category")
     @classmethod
     def require_nonempty_text(cls, value: str) -> str:

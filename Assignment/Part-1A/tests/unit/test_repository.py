@@ -19,6 +19,7 @@ from inventory_api.repository import (
 )
 
 
+
 @pytest.fixture
 def database_path(tmp_path: Path) -> Path:
     path = tmp_path / "inventory.sqlite3"

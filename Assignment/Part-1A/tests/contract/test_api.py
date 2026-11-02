@@ -339,6 +339,7 @@ def test_saved_items_survive_a_fresh_application_instance(tmp_path: Path) -> Non
         assert retrieved.json() == expected
 
 
+
 def test_fresh_database_stays_empty_after_restart(tmp_path: Path) -> None:
     settings = Settings(tmp_path / "empty.sqlite3", low_stock_threshold=1, currency="INR")
     with TestClient(create_app(settings)):

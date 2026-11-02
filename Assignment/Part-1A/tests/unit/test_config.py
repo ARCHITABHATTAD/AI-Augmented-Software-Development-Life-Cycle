@@ -15,6 +15,7 @@ def test_settings_use_local_defaults(monkeypatch: pytest.MonkeyPatch) -> None:
     assert settings.currency == "INR"
 
 
+
 def test_settings_parse_configured_values(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("INVENTORY_DB_PATH", "custom/inventory.sqlite3")
     monkeypatch.setenv("LOW_STOCK_THRESHOLD", "0.75")

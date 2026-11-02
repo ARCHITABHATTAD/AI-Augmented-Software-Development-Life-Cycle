@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS inventory_items (
 """
 
 
+
 @contextmanager
 def connect(database_path: Path) -> Iterator[sqlite3.Connection]:
     """Yield a transaction-scoped SQLite connection and always close it."""
