@@ -26,7 +26,7 @@ validated independently.
 
 - [X] T001 Create the `src/inventory_api/` package, `tests/unit/`, and `tests/contract/` directories with package initializers where needed.
 - [X] T002 Define Python 3.12 project metadata, src-layout packaging, pytest discovery, Ruff settings, and runtime dependencies in `pyproject.toml` and `requirements.txt`.
-- [X] T003 [P] List pytest, HTTPX, and Ruff development dependencies in `requirements-dev.txt`.
+- [X] T003 [P] List pytest, HTTPX, and Ruff development dependencies in `requirements.txt`.
 
 ## Phase 2: Foundational
 
@@ -130,7 +130,7 @@ validated independently.
 
 ## Parallel Opportunities
 
-- **Setup**: T003 can run alongside T001/T002 because it edits only `requirements-dev.txt`.
+- **Setup**: T003 can run alongside T001/T002 because it edits only `requirements.txt`.
 - **Foundational**: T005 and T006 can run in parallel after the package structure exists; T004 and T005 edit separate modules.
 - **US1**: T008, T009, and T010 can be developed concurrently against the checked-in API contract; T011 depends on the schemas and repository; T012 runs after implementation.
 - **US2**: T013 can be authored against the API contract while T014 is implemented; T015 depends on T014; T016 validates both.

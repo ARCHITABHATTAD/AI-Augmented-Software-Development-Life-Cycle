@@ -12,7 +12,6 @@ From the Part-1A project root:
 ```powershell
 py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
 ```
 
 ## Configure and run

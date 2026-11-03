@@ -86,7 +86,6 @@ tests/
     └── test_repository.py
 
 requirements.txt
-requirements-dev.txt
 ```
 
 **Structure Decision**: Use one `src/`-layout Python service. Keep HTTP handling, configuration,
