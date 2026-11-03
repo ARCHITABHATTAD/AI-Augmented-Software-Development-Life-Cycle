@@ -1,0 +1,228 @@
+openapi: 3.1.0
+info:
+  title: Home Inventory API
+  version: 1.0.0
+  description: >-
+    Local single-household inventory API. All unit_price values use one configured
+    ISO 4217 currency for the running inventory; this plan configures INR by default.
+servers:
+  - url: http://127.0.0.1:8000
+paths:
+  /items:
+    post:
+      operationId: createItem
+      summary: Create an inventory item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ItemInput"
+      responses:
+        "201":
+          description: Item created
+          headers:
+            Location:
+              schema:
+                type: string
+              description: URL of the created item
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "409":
+          $ref: "#/components/responses/Conflict"
+    get:
+      operationId: listItems
+      summary: Search or sort inventory
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: string
+          description: Exact category match, case-insensitive
+        - name: sort_by
+          in: query
+          schema:
+            type: string
+            enum: [quantity, unit_price, expiry_date]
+        - name: order
+          in: query
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: asc
+      responses:
+        "200":
+          description: Matching items; empty when none match
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Item"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+  /items/low-stock:
+    get:
+      operationId: listLowStockItems
+      summary: List items below the configured stock threshold
+      responses:
+        "200":
+          description: Items whose quantity is strictly below the threshold
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Item"
+  /items/{item_id}:
+    parameters:
+      - name: item_id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      operationId: getItem
+      summary: Retrieve an item
+      responses:
+        "200":
+          description: Item found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      operationId: updateItem
+      summary: Replace the mutable details of an item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ItemUpdate"
+      responses:
+        "200":
+          description: Item updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      operationId: deleteItem
+      summary: Delete an item
+      responses:
+        "204":
+          description: Item deleted; response has no body
+        "404":
+          $ref: "#/components/responses/NotFound"
+components:
+  schemas:
+    ItemInput:
+      type: object
+      additionalProperties: false
+      required: [id, name, category, quantity, unit_price]
+      properties:
+        id:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+        category:
+          type: string
+          minLength: 1
+        quantity:
+          type: number
+          minimum: 0
+        unit_price:
+          type: number
+          minimum: 0
+        expiry_date:
+          type: [string, "null"]
+          format: date
+    ItemUpdate:
+      type: object
+      additionalProperties: false
+      required: [name, category, quantity, unit_price]
+      description: >-
+        Replaces all mutable item fields. If expiry_date is omitted or null, the stored
+        expiry date is cleared.
+      properties:
+        name:
+          type: string
+          minLength: 1
+        category:
+          type: string
+          minLength: 1
+        quantity:
+          type: number
+          minimum: 0
+        unit_price:
+          type: number
+          minimum: 0
+        expiry_date:
+          type: [string, "null"]
+          format: date
+    Item:
+      type: object
+      additionalProperties: false
+      required: [id, name, category, quantity, unit_price, currency]
+      properties:
+        id:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+        category:
+          type: string
+          minLength: 1
+        quantity:
+          type: number
+          minimum: 0
+        unit_price:
+          type: number
+          minimum: 0
+        expiry_date:
+          type: [string, "null"]
+          format: date
+        currency:
+          type: string
+          minLength: 3
+          maxLength: 3
+          description: ISO 4217 currency code configured for this inventory
+    Error:
+      type: object
+      required: [detail]
+      properties:
+        detail:
+          type: string
+  responses:
+    BadRequest:
+      description: Invalid request data or query parameter
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    NotFound:
+      description: Item identifier is not present
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    Conflict:
+      description: Item identifier is already in use
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
