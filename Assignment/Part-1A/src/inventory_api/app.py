@@ -4,11 +4,13 @@ from __future__ import annotations
 
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Query, Request, Response, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.utils import get_openapi
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 
 from inventory_api.config import Settings
 from inventory_api.database import initialize_database
@@ -36,6 +38,18 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     app = FastAPI(title="Home Inventory API", version="1.0.0", lifespan=lifespan)
     app.state.settings = app_settings
+    
+    static_directory = Path(__file__).parent / "static"
+
+    app.mount(
+        "/static",
+        StaticFiles(directory=static_directory),
+        name="static",
+    )
+
+    @app.get("/", include_in_schema=False)
+    def home() -> FileResponse:
+        return FileResponse(static_directory / "index.html")
 
 
     @app.exception_handler(HTTPException)

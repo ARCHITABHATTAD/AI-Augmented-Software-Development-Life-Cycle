@@ -39,7 +39,7 @@ validated independently.
 
 **Checkpoint**: Settings, isolated database initialization, application construction, and shared error handling are ready for story implementation.
 
-## Phase 3: User Story 1 - Maintain Household Items (Priority: P1) 🎯 MVP
+## Phase 3: User Story 1 - Maintain Household Items (Priority: P1)  MVP
 
 **Goal**: Create, retrieve, update, and delete inventory items with clear validation and HTTP responses.
 

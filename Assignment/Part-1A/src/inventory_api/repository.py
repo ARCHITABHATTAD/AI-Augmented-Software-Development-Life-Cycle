@@ -42,7 +42,7 @@ def create_item(database_path: Path, item: dict[str, Any]) -> dict[str, Any]:
                     item["quantity"],
                     item["unit_price"],
                     item["expiry_date"].isoformat() if item["expiry_date"] else None,
-                ),
+                ),  
             )
     except sqlite3.IntegrityError as exc:
         if "UNIQUE constraint failed: inventory_items.id" in str(exc):
