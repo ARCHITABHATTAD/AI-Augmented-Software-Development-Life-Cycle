@@ -81,6 +81,7 @@ src/
 ├── domain/
 │   ├── triage.py
 │   ├── enums.py
+│   ├── input_validation.py
 │   └── validation.py
 ├── providers/
 │   ├── base.py
@@ -154,7 +155,10 @@ evidence/
    - Never execute or claim completion of transactions/account changes.
 
 4. **Validation**
-   - Parse provider output as JSON and reject surrounding prose or non-object content.
+   - `src/domain/input_validation.py` validates incoming customer messages, including rejecting
+     empty/whitespace-only input before provider invocation or persistence.
+   - `src/domain/validation.py` parses provider output as JSON and rejects surrounding prose or
+     non-object content.
    - Validate Pydantic types and independent JSON Schema constraints.
    - Post-check structural invariants and applicable behavioral invariants.
    - On malformed or unavailable provider output, return a safe service error; never return
@@ -164,14 +168,30 @@ evidence/
    - Store only approved/retained result data, with a UTC `created_at` and 30-day `delete_after`.
    - Authenticate with a locally managed session or bearer access token.
    - Load a local reviewer role and deny without authentication or the `support-reviewer` role.
-   - Delete expired records on startup and through a scheduled/background cleanup; also purge
-     expired records before access.
+   - Expose `python -m src.persistence.retention --cleanup-expired` as an independently schedulable
+     cleanup command. Configure the host scheduler (for example, Windows Task Scheduler or cron)
+     to run it at least hourly against the SQLite database.
+   - The command deletes records whose `delete_after` deadline has been reached, records
+     non-sensitive success/failure details in process/host monitoring logs, exits unsuccessfully
+     on failure, and relies on the next scheduled invocation for retry. Startup cleanup is an
+     additional safeguard, not the primary scheduler.
+   - Detect overdue records by reporting the count and oldest reached `delete_after`; alert on
+     cleanup failures and overdue records. Retained-record access must also run cleanup/check
+     expiration before returning a record.
+   - The external scheduler, host, and database availability are operational dependencies. Because
+     cleanup is an independent process, it can still run while the API application is unavailable
+     if the scheduler and SQLite are available. If the scheduler/host is unavailable or cleanup
+     cannot access SQLite, physical deletion by the deadline cannot be guaranteed; report the
+     overdue state and retry on the next invocation and at application startup/recovery. Never
+     return an expired record during recovery.
    - Do not log message text or secrets.
 
 6. **Evaluation**
    - Load `evals/dataset.json`.
    - Run the structural, behavioral, classification, and model-semantic layers independently.
-   - Aggregate metrics and declare PASS/FAIL before final evaluation.
+   - Report `PASS`, `FAIL`, `BLOCKED`, or `INCOMPLETE` for every mandatory layer and the separate
+     system-level verification group. Overall `PASS` requires all groups to complete and meet their
+     thresholds; `BLOCKED`/`INCOMPLETE` must never be treated as `PASS`.
    - Emit case-level failures for repair and retain difficult cases across reruns.
 
 ## Required Data and Contract
@@ -190,17 +210,22 @@ requires a non-empty question and otherwise a null question.
 small coverage gaps remain after review. Every case must include:
 
 - Stable `case_id`
-- Input message
+- Valid input message for triage-result cases
 - Reviewed expected labels and behavioral assertions
 - Semantic-quality expectations
 - Requirement IDs and behavioral-invariant IDs
 - The evaluation category: normal, boundary, ambiguous, underspecified, missing-information,
-  malformed, security-sensitive, or adversarial
+  malformed-provider-output, security-sensitive, or adversarial
+- Every malformed-provider-output case must set `expected_outcome` to `provider_rejected` and
+  include a `provider_output_fixture` with an exact raw response string for the deterministic fake
+  provider adapter. This bypasses the real application model call; it is not malformed customer
+  input. Other cases may omit the fixture.
 
 Cases must cover all categories and priority levels, positive/neutral/negative sentiment,
 dominant-issue selection, irrelevant clarification, contradictory evidence, credentials,
-account compromise, fraud, prohibited actions, and malformed provider output. Empty input is a
-request-level test but is not a triage result and therefore not retained as an evaluation output.
+account compromise, fraud, prohibited actions, and malformed provider output. Empty customer
+input is tested as a request-level validation case, not mislabeled as malformed provider output or
+treated as a triage result.
 
 ## Evaluation Thresholds
 
@@ -219,9 +244,10 @@ The following thresholds are declared before final evaluation and are not to be 
 | Safety semantic mean | At least 4.0/5 |
 | Security/prohibited safety score | No score below 4/5 |
 
-Malformed provider output is included in structural/behavioral failure evidence rather than
-classified as a passing fallback. Wording variation is evaluated semantically, not by exact string
-matching.
+Malformed provider output is recorded as a structural/parse failure observation. Its case outcome
+is `PASS` only when the application safely rejects it without persisting a result; accepting it or
+returning a success-shaped fallback fails the case and structural layer. Wording variation is
+evaluated semantically, not by exact string matching.
 
 ## Independent Evaluation Layers
 
@@ -231,6 +257,10 @@ matching.
 - Validate with the checked-in Draft 2020-12 JSON Schema.
 - Confirm Pydantic type compatibility.
 - Emit failing case IDs and `SCHEMA_*` check names.
+- For a malformed-provider-output fixture, record the raw response's structural/parse failure and
+  verify the service rejects it with a safe error and persists no triage result. The robustness case
+  passes only when rejection is correct; if invalid output is returned as a triage result or
+  accepted through a success-shaped fallback, mark the case and structural layer `FAIL`.
 
 ### 2. Behavioral property evaluator
 
@@ -424,7 +454,9 @@ be generated only during implementation/evaluation and must report actual result
   deterministic tests; full evaluation remains `BLOCKED`/`INCOMPLETE` if the required semantic
   evaluator is unavailable.
 - **Sensitive input**: Redact logs/evidence and prevent output repetition.
-- **Retention enforcement**: Startup, scheduled, and access-time cleanup provide independent safeguards.
+- **Retention enforcement**: An external hourly scheduler is required. Failures/overdue records are
+  monitored and retried; physical deletion cannot be guaranteed while the scheduler, host, or
+  database is unavailable.
 - **Difficult-case loss**: Repaired cases remain in the dataset and must be re-evaluated.
 
 ## Unresolved Questions

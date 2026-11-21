@@ -74,8 +74,9 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 - [ ] T012 [P] [US1] Define the application-provider protocol and typed failure boundary in
   `src/providers/base.py` (FR-006, FR-007, FR-013).
 - [ ] T013 [P] [US1] Implement deterministic `MockProvider` fixtures in
-  `src/providers/mock_provider.py` for offline development and repeatable tests; do not use it to
-  generate semantic-evaluator scores (FR-013, FR-014).
+  `src/providers/mock_provider.py` for offline development and repeatable tests, including a mode
+  that injects an exact raw provider response from an evaluation fixture and bypasses real model
+  calls; do not use it to generate semantic-evaluator scores (FR-013, FR-014).
 - [ ] T014 [US1] Implement the configurable real application-provider adapter in
   `src/providers/configured_provider.py`, reading credentials only from environment configuration
   and enforcing timeouts and bounded retries (FR-006, FR-007, FR-013).
@@ -115,9 +116,13 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 
 - [ ] T020 [US2] Implement SQLite schema and repository operations for retained messages/results,
   UTC creation timestamps, and 30-day expiration in `src/persistence/database.py` (FR-015, SC-007).
-- [ ] T021 [US2] Implement startup, scheduled, and access-time deletion of expired records in
-  `src/persistence/retention.py`; ensure expired rows cannot be returned after their deadline
-  (FR-015, SC-007).
+- [ ] T021 [US2] Implement `python -m src.persistence.retention --cleanup-expired` as an
+  independently schedulable cleanup command in `src/persistence/retention.py`; delete records at
+  or past `delete_after`, and document an external host scheduler running it at least hourly
+  independently of the API process. Keep startup cleanup as an additional safeguard. Log
+  non-sensitive success/failure outcomes to process/host monitoring, return a failure exit status
+  so the next scheduled run retries, and report overdue-record count and oldest deadline for
+  detection. Prevent expired rows from being returned after their deadline (FR-015, SC-007).
 
 ## Phase 8: FastAPI endpoints and error handling
 
@@ -157,7 +162,8 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
   denial, and authenticated unauthorized-role denial in
   `tests/security/test_reviewer_access.py` (depends on T018, T019, T020, T023; FR-015, SC-007).
 - [ ] T032 [P] [US2] Add integration tests proving 30-day expiration deletes a record and prevents
-  retrieval in `tests/integration/test_retention.py` (FR-015, SC-007).
+  retrieval; verify cleanup failures are observable, overdue records are reported, and cleanup can
+  be retried after recovery in `tests/integration/test_retention.py` (FR-015, SC-007).
 - [ ] T033 [US1] Add FastAPI integration tests for valid triage JSON, 422 empty input, 503 provider
   failure, and no persistence on rejected or malformed requests in
   `tests/integration/test_triage_api.py` (FR-001, FR-007, FR-015, SC-001, SC-002).
@@ -171,19 +177,26 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 
 - [ ] T035 [US3] Create `evals/dataset.json` with at least 15 meaningful cases spanning all
   categories and priority levels, normal/boundary/ambiguous/underspecified/missing-information/
-  malformed/security-sensitive/adversarial inputs, multiple issues, and prohibited actions
+  malformed-provider-output/security-sensitive/adversarial cases, multiple issues, and prohibited
+  actions. Represent malformed provider output with a raw-response fixture sent through the
+  deterministic fake provider, bypassing a real model call; keep the customer message valid
   (FR-012, SC-003).
 - [ ] T036 [US3] Add stable case IDs, reviewed expected labels/assertions, semantic expectations,
-  and FR/SC plus behavioral-invariant traceability IDs to every case; add dataset completeness
-  validation in `tests/evaluation/test_dataset.py` (FR-012, FR-016, SC-003, SC-008).
+  expected outcome, and FR/SC plus behavioral-invariant traceability IDs to every case. Require a
+  deterministic raw provider-output fixture for malformed-provider-output cases (optional for
+  others), and validate those cases use valid customer messages in
+  `tests/evaluation/test_dataset.py` (FR-012, FR-016, SC-003, SC-008).
 
 ## Phase 11: Structural/schema evaluator
 
 **Purpose**: Independently verify raw output shape and schema conformance.
 
 - [ ] T037 [US3] Implement `src/evaluation/structural_evaluator.py` to parse output, enforce
-  exactly the nine required fields and Draft 2020-12 schema, and report case-level failure codes
-  (FR-007, FR-013, SC-001, SC-006, SC-008).
+  exactly the nine required fields and Draft 2020-12 schema, and report case-level failure codes.
+  Execute malformed-provider-output fixtures through the deterministic fake provider, record the
+  raw response's structural failure, and mark the case PASS only when the application safely
+  rejects it without persisting a result; accepting invalid output or returning a success-shaped
+  fallback fails the case and layer (FR-007, FR-013, SC-001, SC-006, SC-008).
 
 ## Phase 12: Behavioural invariant evaluator
 
@@ -215,7 +228,7 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
   evaluator output as `INCOMPLETE`, never substituting scores (`src/evaluation/semantic_evaluator.py`,
   `tests/evaluation/test_semantic_status.py`) (FR-013, FR-014, SC-005, SC-006).
 
-## Phase 15: Single evaluation runner and aggregate PASS/FAIL
+## Phase 15: Single evaluation runner and aggregate outcomes
 
 **Purpose**: Run all mandatory layers and system-level verification with an honest aggregate status.
 
@@ -259,7 +272,8 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 
 - [ ] T048 [P] [Shared] Write root `README.md` with Python 3.12 installation, environment
   configuration, application startup, test commands, evaluation commands, and the distinction
-  between mock application provider and fixed semantic evaluator (depends on T002–T004, T034,
+  between mock application provider and fixed semantic evaluator; document hourly retention
+  scheduler setup, monitoring, outage limitations, and recovery (depends on T002–T004, T034,
   T042; FR-013, FR-015).
 - [ ] T049 [Shared] Verify required files/directories, clean secret handling, test commands,
   dataset traceability, all declared thresholds, evidence status semantics, and submission layout;
@@ -268,7 +282,8 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 
 ## Dependencies and execution order
 
-- **Phase 1** has no prerequisites. T001–T004 are independent setup deliverables.
+- **Phase 1** has no external prerequisites. T001 creates the project structure; T002–T004 depend
+  on T001 and can proceed independently once it is complete.
 - **Phase 2** depends on the project structure. T005 precedes T006; T007 depends on the model and
   schema contract.
 - **Phases 3–8** form the application path: domain work depends on Phase 2; providers and prompts
@@ -300,7 +315,7 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 - T029–T030: T011. T031: T018, T019, T020, T023. T032: T020–T021.
 - T033: T022–T024. T034: T025–T033.
 - T035: T001. T036: T005, T011, T035.
-- T037: T006, T016, T035–T036. T038: T011, T035–T036.
+- T037: T006, T013, T016, T035–T036. T038: T011, T035–T036.
 - T039: T005, T035–T036. T040: T003, T015, T035–T036. T041: T040.
 - T042: T031–T032, T037–T041. T043: T042. T044: T042–T043.
 - T045: T042, T044. T046: T042, T045. T047: T046.

@@ -10,7 +10,12 @@
 
 ## Clarifications
 
-- When evidence is incomplete, return the best-supported labels, mark clarification as required, and avoid unsupported certainty.
+- Ask a focused clarification question only when missing, ambiguous, or conflicting information
+  could materially change the category, priority, department, safety handling, or useful next step.
+  Do not ask unnecessary questions when the available evidence supports a safe and useful response.
+  For multiple issues, select the dominant issue using risk, time sensitivity, and customer impact;
+  ask a focused question if the dominant issue cannot be determined confidently. Return the
+  best-supported labels and avoid unsupported certainty.
 - Use five corresponding support departments: PAYMENT_SUPPORT, DELIVERY_SUPPORT, ACCOUNT_SUPPORT, TECHNICAL_SUPPORT, and GENERAL_SUPPORT.
 
 ### Session 2026-11-03
