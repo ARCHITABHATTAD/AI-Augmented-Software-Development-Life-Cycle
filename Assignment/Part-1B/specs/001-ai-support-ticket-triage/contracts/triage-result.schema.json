@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "category",
+    "priority",
+    "sentiment",
+    "department",
+    "suggested_response",
+    "rationale",
+    "clarification_required",
+    "clarification_question",
+    "human_review_required"
+  ],
+  "properties": {
+    "category": {
+      "type": "string",
+      "enum": ["PAYMENT", "DELIVERY", "ACCOUNT", "TECHNICAL", "GENERAL"]
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"]
+    },
+    "sentiment": {
+      "type": "string",
+      "enum": ["POSITIVE", "NEUTRAL", "NEGATIVE"]
+    },
+    "department": {
+      "type": "string",
+      "enum": [
+        "PAYMENT_SUPPORT",
+        "DELIVERY_SUPPORT",
+        "ACCOUNT_SUPPORT",
+        "TECHNICAL_SUPPORT",
+        "GENERAL_SUPPORT"
+      ]
+    },
+    "suggested_response": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "clarification_required": {
+      "type": "boolean"
+    },
+    "clarification_question": {
+      "type": ["string", "null"]
+    },
+    "human_review_required": {
+      "type": "boolean"
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "category": { "const": "PAYMENT" } } },
+      "then": { "properties": { "department": { "const": "PAYMENT_SUPPORT" } } }
+    },
+    {
+      "if": { "properties": { "category": { "const": "DELIVERY" } } },
+      "then": { "properties": { "department": { "const": "DELIVERY_SUPPORT" } } }
+    },
+    {
+      "if": { "properties": { "category": { "const": "ACCOUNT" } } },
+      "then": { "properties": { "department": { "const": "ACCOUNT_SUPPORT" } } }
+    },
+    {
+      "if": { "properties": { "category": { "const": "TECHNICAL" } } },
+      "then": { "properties": { "department": { "const": "TECHNICAL_SUPPORT" } } }
+    },
+    {
+      "if": { "properties": { "category": { "const": "GENERAL" } } },
+      "then": { "properties": { "department": { "const": "GENERAL_SUPPORT" } } }
+    },
+    {
+      "if": { "properties": { "clarification_required": { "const": true } } },
+      "then": {
+        "properties": {
+          "clarification_question": { "type": "string", "minLength": 1 }
+        }
+      },
+      "else": {
+        "properties": { "clarification_question": { "type": "null" } }
+      }
+    }
+  ]
+}

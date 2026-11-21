@@ -1,0 +1,58 @@
+openapi: 3.1.0
+info:
+  title: AI Customer Support Ticket Triage API
+  version: 1.0.0
+paths:
+  /triage:
+    post:
+      summary: Triage a non-empty customer support message
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [message]
+              properties:
+                message:
+                  type: string
+                  minLength: 1
+      responses:
+        "200":
+          description: Structured triage result
+          content:
+            application/json:
+              schema:
+                $ref: "./triage-result.schema.json"
+        "422":
+          description: Empty or whitespace-only input
+        "503":
+          description: AI provider unavailable or malformed provider output
+  /retained/{record_id}:
+    get:
+      summary: Retrieve one retained record
+      security:
+        - reviewerAuth: []
+      parameters:
+        - name: record_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Retained message and triage result
+        "401":
+          description: Unauthenticated
+        "403":
+          description: Authenticated but not a support reviewer
+        "404":
+          description: Record absent or expired
+components:
+  securitySchemes:
+    reviewerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Local access token

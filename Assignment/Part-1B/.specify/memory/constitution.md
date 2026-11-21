@@ -1,50 +1,66 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report
+Version change: uninitialized template -> 1.0.0
+Modified principles: established five core principles for this project
+Added sections: Additional Constraints; Development Workflow and Quality Gates
+Removed sections: none
+Follow-up TODOs: none
+-->
+
+# Part-1B Project Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Requirements-First Development
+Every feature MUST begin with clear user needs, functional requirements, and verifiable
+acceptance criteria. Specifications MUST be clarified before implementation when a material
+behavior or constraint is ambiguous. Design, implementation, and tests MUST remain traceable to
+those requirements.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Simple, Modular Design
+Solutions MUST use the simplest architecture that satisfies approved requirements. Components
+MUST have clear responsibilities and interfaces. New dependencies, abstractions, and configuration
+MUST be justified by concrete needs; unrelated refactoring MUST NOT be bundled with feature work.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Verified Delivery
+Changes MUST include automated tests appropriate to their behavior and risk. Tests MUST be
+deterministic, isolated from external services unless explicitly required, and assert meaningful
+outcomes rather than implementation details. Relevant tests and configured lint or type checks
+MUST pass before a change is considered complete; known failures MUST be reported.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Security and Privacy by Design
+Inputs MUST be validated at trust boundaries, and persistence or external commands MUST use safe,
+structured APIs rather than unsafe string construction. Secrets and unnecessary personal data
+MUST NOT be committed or exposed in logs, examples, or test fixtures. Access and data handling
+MUST remain within the approved project scope.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Responsible AI and Maintainability
+AI-assisted specifications, code, tests, and documentation MUST be reviewed by a human for
+correctness, security, requirement fit, and maintainability. Material claims MUST be supported by
+repository evidence or verification results. Code and documentation MUST be clear enough for
+another project contributor to understand and maintain.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Additional Constraints
+Implementation MUST follow the technology, platform, and dependency decisions recorded in the
+approved specification and plan. A change to those decisions MUST include an explicit rationale
+and an assessment of its effect on existing requirements and tests. The project MUST remain within
+its agreed assignment scope; optional features MUST NOT replace required behavior.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Development Workflow and Quality Gates
+Work MUST proceed through a traceable specification, plan, task breakdown, implementation, and
+verification appropriate to the change. Tasks MUST identify affected files and meaningful
+dependencies. Before completion, contributors MUST check relevant acceptance criteria, run the
+smallest sufficient automated test and quality-check commands, and update directly related
+documentation. Any intentional deviation from this constitution MUST be documented with its
+rationale and impact.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+This constitution governs project decisions and takes precedence over conflicting project
+guidance. Amendments MUST be deliberate, recorded in version control, and reviewed for impacts on
+specifications, plans, tasks, tests, and contributor guidance. Versioning follows semantic
+versioning: PATCH for non-semantic clarification, MINOR for additive principles or requirements,
+and MAJOR for incompatible changes to existing principles. Contributors MUST review changes for
+compliance with these principles; any exception requires explicit rationale and approval from the
+project owner.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-11-02 | **Last Amended**: 2026-11-03
