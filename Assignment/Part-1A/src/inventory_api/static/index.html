@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Home Inventory and Stock Management Dashboard">
+    <title>HomeStock | Inventory Management</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">H</div>
+                <div>
+                    <h2>HomeStock</h2>
+                    <span>Inventory Manager</span>
+                </div>
+            </div>
+
+            <nav class="navigation">
+                <a href="#dashboard" class="nav-link active">
+                    <span>▦</span> Dashboard
+                </a>
+                <a href="#inventory" class="nav-link">
+                    <span>▤</span> Inventory
+                </a>
+                <a href="#low-stock" class="nav-link">
+                    <span>⚠</span> Low Stock
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <span class="status-dot"></span>
+                Inventory system online
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">HOME INVENTORY</p>
+                    <h1>Dashboard</h1>
+                    <p class="subtitle">Manage and monitor your household stock.</p>
+                </div>
+                <button class="primary-button" id="addItemButton">
+                    <span>＋</span> Add New Item
+                </button>
+            </header>
+
+            <section class="summary-grid" id="dashboard">
+                <article class="summary-card">
+                    <div class="summary-icon purple">▤</div>
+                    <p>Total Items</p>
+                    <h2 id="totalItems">0</h2>
+                    <span>Unique inventory records</span>
+                </article>
+
+                <article class="summary-card">
+                    <div class="summary-icon green">▣</div>
+                    <p>Total Stock Units</p>
+                    <h2 id="totalQuantity">0</h2>
+                    <span>Units currently available</span>
+                </article>
+
+                <article class="summary-card">
+                    <div class="summary-icon orange">₹</div>
+                    <p>Inventory Value</p>
+                    <h2 id="inventoryValue">₹0.00</h2>
+                    <span>Quantity × unit price</span>
+                </article>
+
+                <article class="summary-card">
+                    <div class="summary-icon red">⚠</div>
+                    <p>Low Stock Items</p>
+                    <h2 id="lowStockCount">0</h2>
+                    <span>Below configured threshold</span>
+                </article>
+            </section>
+
+            <section class="inventory-section" id="inventory">
+                <div class="section-heading">
+                    <div>
+                        <h2>Inventory Overview</h2>
+                        <p>View, search, update and manage your items.</p>
+                    </div>
+                    <button class="secondary-button" id="refreshButton">
+                        ↻ Refresh
+                    </button>
+                </div>
+
+                <div class="toolbar">
+                    <div class="search-box">
+                        <span>⌕</span>
+                        <input
+                            type="search"
+                            id="searchInput"
+                            placeholder="Search by item name or ID..."
+                        >
+                    </div>
+
+                    <select id="categoryFilter" aria-label="Filter by category">
+                        <option value="">All categories</option>
+                    </select>
+
+                    <select id="sortFilter" aria-label="Sort inventory">
+                        <option value="">Default order</option>
+                        <option value="quantity">Quantity: Low to High</option>
+                        <option value="unit_price">Price: Low to High</option>
+                        <option value="expiry_date">Expiry Date: Earliest</option>
+                    </select>
+                </div>
+
+                <div id="messageArea" class="message-area" role="status"></div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Category</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Expiry Date</th>
+                                <th>Stock Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryTableBody">
+                            <tr>
+                                <td colspan="7" class="empty-state">
+                                    Loading inventory...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-footer">
+                    <span id="resultCount">Showing 0 items</span>
+                </div>
+            </section>
+
+            <section class="low-stock-section" id="low-stock">
+                <div class="section-heading">
+                    <div>
+                        <h2>Low Stock Alerts</h2>
+                        <p>Items that need replenishment.</p>
+                    </div>
+                </div>
+                <div id="lowStockList" class="low-stock-list">
+                    <p class="muted">Loading low-stock items...</p>
+                </div>
+            </section>
+
+            <footer class="page-footer">
+                HomeStock Inventory Management · Powered by FastAPI and SQLite
+            </footer>
+        </main>
+    </div>
+
+    <!-- Add / Edit Item Modal -->
+    <div class="modal-backdrop" id="itemModal" hidden>
+        <section class="modal" role="dialog" aria-modal="true"
+                 aria-labelledby="modalTitle">
+            <div class="modal-heading">
+                <div>
+                    <p class="eyebrow">INVENTORY MANAGEMENT</p>
+                    <h2 id="modalTitle">Add New Item</h2>
+                </div>
+                <button type="button" class="close-button" id="closeModalButton"
+                        aria-label="Close">×</button>
+            </div>
+
+            <form id="itemForm">
+                <div class="form-grid">
+                    <label class="form-field" id="itemIdField">
+                        Item ID
+                        <input type="text" id="itemId" required
+                               placeholder="e.g. ITEM-001">
+                    </label>
+
+                    <label class="form-field">
+                        Item Name
+                        <input type="text" id="itemName" required
+                               placeholder="e.g. Rice">
+                    </label>
+
+                    <label class="form-field">
+                        Category
+                        <input type="text" id="itemCategory" required
+                               placeholder="e.g. Groceries">
+                    </label>
+
+                    <label class="form-field">
+                        Quantity
+                        <input type="number" id="itemQuantity" required
+                               min="0" step="any" placeholder="e.g. 10">
+                    </label>
+
+                    <label class="form-field">
+                        Unit Price
+                        <input type="number" id="itemPrice" required
+                               min="0" step="any" placeholder="e.g. 50">
+                    </label>
+
+                    <label class="form-field">
+                        Expiry Date
+                        <input type="date" id="itemExpiry">
+                        <span class="field-hint">Optional</span>
+                    </label>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="secondary-button"
+                            id="cancelButton">Cancel</button>
+                    <button type="submit" class="primary-button" id="saveButton">
+                        Save Item
+                    </button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <script src="/static/app.js" defer></script>
+</body>
+</html>

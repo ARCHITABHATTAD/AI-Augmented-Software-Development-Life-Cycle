@@ -1,0 +1,52 @@
+I001 [*] Import block is un-sorted or un-formatted
+ --> src\inventory_api\config.py:3:1
+  |
+1 |   """Startup configuration for the inventory service."""
+2 |
+3 | / from __future__ import annotations
+4 | |
+5 | | import math
+6 | | import os
+7 | | import re
+8 | | from dataclasses import dataclass
+9 | | from pathlib import Path
+  | |________________________^
+help: Organize imports
+   |
+11 |
+   -
+12 | @dataclass(frozen=True)
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> tests\unit\test_repository.py:1:1
+   |
+ 1 | / from __future__ import annotations
+ 2 | |
+ 3 | | from datetime import date
+ 4 | | from pathlib import Path
+ 5 | | from typing import Any
+ 6 | |
+ 7 | | import pytest
+ 8 | |
+ 9 | | from inventory_api.database import initialize_database
+10 | | from inventory_api.repository import (
+11 | |     DuplicateItemError,
+12 | |     ItemNotFoundError,
+13 | |     create_item,
+14 | |     delete_item,
+15 | |     get_item,
+16 | |     list_items,
+17 | |     list_low_stock_items,
+18 | |     update_item,
+19 | | )
+   | |_^
+help: Organize imports
+   |
+21 |
+   -
+22 | @pytest.fixture
+   |
+
+Found 2 errors.
+[*] 2 fixable with `--fix`.

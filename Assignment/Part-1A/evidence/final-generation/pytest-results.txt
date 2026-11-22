@@ -1,0 +1,79 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.0, pytest-9.2.0, pluggy-1.7.0 -- D:\Mtech\AI-Augmented Software Development Life Cycle_SEM1\2026NS93043\assignment\part-1A\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: D:\Mtech\AI-Augmented Software Development Life Cycle_SEM1\2026NS93043\Assignment\Part-1A
+configfile: pyproject.toml
+plugins: anyio-4.16.0
+collecting ... collected 63 items
+
+tests/contract/test_api.py::test_create_and_retrieve_item PASSED         [  1%]
+tests/contract/test_api.py::test_update_replaces_mutable_fields_and_omitted_expiry_is_cleared PASSED [  3%]
+tests/contract/test_api.py::test_explicit_null_expiry_clears_date PASSED [  4%]
+tests/contract/test_api.py::test_delete_item_returns_empty_204_and_then_not_found PASSED [  6%]
+tests/contract/test_api.py::test_unknown_item_operations_return_404[get-/items/missing] PASSED [  7%]
+tests/contract/test_api.py::test_unknown_item_operations_return_404[delete-/items/missing] PASSED [  9%]
+tests/contract/test_api.py::test_update_unknown_item_returns_404 PASSED  [ 11%]
+tests/contract/test_api.py::test_duplicate_identifier_returns_conflict_without_overwriting PASSED [ 12%]
+tests/contract/test_api.py::test_invalid_create_returns_400_with_field_message[payload0] PASSED [ 14%]
+tests/contract/test_api.py::test_invalid_create_returns_400_with_field_message[payload1] PASSED [ 15%]
+tests/contract/test_api.py::test_invalid_create_returns_400_with_field_message[payload2] PASSED [ 17%]
+tests/contract/test_api.py::test_invalid_create_returns_400_with_field_message[payload3] PASSED [ 19%]
+tests/contract/test_api.py::test_invalid_create_returns_400_with_field_message[payload4] PASSED [ 20%]
+tests/contract/test_api.py::test_invalid_create_returns_400_with_field_message[payload5] PASSED [ 22%]
+tests/contract/test_api.py::test_invalid_create_returns_400_with_field_message[payload6] PASSED [ 23%]
+tests/contract/test_api.py::test_invalid_create_returns_400_with_field_message[payload7] PASSED [ 25%]
+tests/contract/test_api.py::test_invalid_create_returns_400_with_field_message[payload8] PASSED [ 26%]
+tests/contract/test_api.py::test_invalid_create_returns_400_with_field_message[payload9] PASSED [ 28%]
+tests/contract/test_api.py::test_invalid_create_returns_400_with_field_message[payload10] PASSED [ 30%]
+tests/contract/test_api.py::test_invalid_update_returns_400_without_partial_change PASSED [ 31%]
+tests/contract/test_api.py::test_numeric_string_update_returns_400_without_partial_change PASSED [ 33%]
+tests/contract/test_api.py::test_update_cannot_change_identifier PASSED  [ 34%]
+tests/contract/test_api.py::test_list_items_defaults_to_deterministic_identifier_order PASSED [ 36%]
+tests/contract/test_api.py::test_category_search_is_exact_and_case_insensitive PASSED [ 38%]
+tests/contract/test_api.py::test_sorting_is_stable_and_keeps_missing_dates_last[quantity-asc-expected_ids0] PASSED [ 39%]
+tests/contract/test_api.py::test_sorting_is_stable_and_keeps_missing_dates_last[quantity-desc-expected_ids1] PASSED [ 41%]
+tests/contract/test_api.py::test_sorting_is_stable_and_keeps_missing_dates_last[unit_price-asc-expected_ids2] PASSED [ 42%]
+tests/contract/test_api.py::test_sorting_is_stable_and_keeps_missing_dates_last[unit_price-desc-expected_ids3] PASSED [ 44%]
+tests/contract/test_api.py::test_sorting_is_stable_and_keeps_missing_dates_last[expiry_date-asc-expected_ids4] PASSED [ 46%]
+tests/contract/test_api.py::test_sorting_is_stable_and_keeps_missing_dates_last[expiry_date-desc-expected_ids5] PASSED [ 47%]
+tests/contract/test_api.py::test_invalid_sort_parameters_return_400[params0] PASSED [ 49%]
+tests/contract/test_api.py::test_invalid_sort_parameters_return_400[params1] PASSED [ 50%]
+tests/contract/test_api.py::test_low_stock_endpoint_is_not_captured_by_item_id_route PASSED [ 52%]
+tests/contract/test_api.py::test_low_stock_threshold_can_be_zero PASSED  [ 53%]
+tests/contract/test_api.py::test_saved_items_survive_a_fresh_application_instance PASSED [ 55%]
+tests/contract/test_api.py::test_fresh_database_stays_empty_after_restart PASSED [ 57%]
+tests/contract/test_api.py::test_openapi_documents_http_400_validation_contract PASSED [ 58%]
+tests/unit/test_config.py::test_settings_use_local_defaults PASSED       [ 60%]
+tests/unit/test_config.py::test_settings_parse_configured_values PASSED  [ 61%]
+tests/unit/test_config.py::test_settings_reject_invalid_threshold[not-a-number] PASSED [ 63%]
+tests/unit/test_config.py::test_settings_reject_invalid_threshold[-1] PASSED [ 65%]
+tests/unit/test_config.py::test_settings_reject_invalid_threshold[nan] PASSED [ 66%]
+tests/unit/test_config.py::test_settings_reject_invalid_threshold[inf] PASSED [ 68%]
+tests/unit/test_config.py::test_settings_reject_invalid_threshold[-inf] PASSED [ 69%]
+tests/unit/test_config.py::test_settings_reject_invalid_currency_format[] PASSED [ 71%]
+tests/unit/test_config.py::test_settings_reject_invalid_currency_format[US] PASSED [ 73%]
+tests/unit/test_config.py::test_settings_reject_invalid_currency_format[USDD] PASSED [ 74%]
+tests/unit/test_config.py::test_settings_reject_invalid_currency_format[12$] PASSED [ 76%]
+tests/unit/test_repository.py::test_create_and_get_item PASSED           [ 77%]
+tests/unit/test_repository.py::test_duplicate_identifier_does_not_replace_item PASSED [ 79%]
+tests/unit/test_repository.py::test_update_replaces_mutable_fields_without_changing_id PASSED [ 80%]
+tests/unit/test_repository.py::test_missing_item_operations_raise_not_found PASSED [ 82%]
+tests/unit/test_repository.py::test_delete_item PASSED                   [ 84%]
+tests/unit/test_repository.py::test_database_constraints_reject_negative_values PASSED [ 85%]
+tests/unit/test_repository.py::test_list_category_uses_casefold_and_exact_matching PASSED [ 87%]
+tests/unit/test_repository.py::test_list_sorting_has_stable_identifier_ties_and_null_last[quantity-asc-expected0] PASSED [ 88%]
+tests/unit/test_repository.py::test_list_sorting_has_stable_identifier_ties_and_null_last[quantity-desc-expected1] PASSED [ 90%]
+tests/unit/test_repository.py::test_list_sorting_has_stable_identifier_ties_and_null_last[unit_price-asc-expected2] PASSED [ 92%]
+tests/unit/test_repository.py::test_list_sorting_has_stable_identifier_ties_and_null_last[unit_price-desc-expected3] PASSED [ 93%]
+tests/unit/test_repository.py::test_list_sorting_has_stable_identifier_ties_and_null_last[expiry_date-asc-expected4] PASSED [ 95%]
+tests/unit/test_repository.py::test_list_sorting_has_stable_identifier_ties_and_null_last[expiry_date-desc-expected5] PASSED [ 96%]
+tests/unit/test_repository.py::test_list_items_rejects_unsupported_sort PASSED [ 98%]
+tests/unit/test_repository.py::test_low_stock_is_strictly_below_threshold PASSED [100%]
+
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  D:\Mtech\AI-Augmented Software Development Life Cycle_SEM1\2026NS93043\assignment\part-1A\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 63 passed, 1 warning in 3.67s ========================
