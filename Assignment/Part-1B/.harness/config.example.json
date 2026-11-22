@@ -1,0 +1,17 @@
+{
+  "application_provider": "mock",
+  "semantic_evaluator": {
+    "model_env": "SEMANTIC_EVALUATOR_MODEL",
+    "endpoint_env": "SEMANTIC_EVALUATOR_BASE_URL",
+    "credential_env": "SEMANTIC_EVALUATOR_API_KEY",
+    "rubric_version_env": "SEMANTIC_EVALUATOR_RUBRIC_VERSION"
+  },
+  "thresholds": {
+    "json_schema_conformance": 1.0,
+    "behavioral_invariant_pass_rate": 1.0,
+    "classification_agreement_per_field": 0.8,
+    "semantic_mean_per_dimension": 4.0,
+    "security_prohibited_safety_minimum": 4
+  },
+  "secrets_included": false
+}

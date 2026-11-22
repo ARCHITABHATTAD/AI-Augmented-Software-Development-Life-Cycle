@@ -48,7 +48,19 @@ persist bearer tokens in plaintext in evidence or logs.
 **Decision**: SQLite with UTC `created_at` and `delete_after` fields.
 
 **Rationale**: SQLite is simple, local, dependency-light, and sufficient for assignment-scale
-retention. Cleanup runs at startup, through scheduled/access-time cleanup, and before record access.
+retention. Expose `python -m src.persistence.retention --cleanup-expired` as an independent cleanup
+process, scheduled by the host at least hourly. It deletes records when `delete_after` is reached,
+records non-sensitive cleanup outcomes for monitoring, exits unsuccessfully on failure, and is
+retried at the next scheduled run. Startup cleanup is an additional safeguard, and retained-record
+access also prevents expired records from being returned. Since cleanup is independent of the API,
+it can continue during an application outage if the scheduler and SQLite database are available.
+
+**Operational dependency and recovery**: The host scheduler must run reliably and have access to
+the configured SQLite database; this external scheduler is an operational dependency, not an
+application-library dependency. Monitor failed attempts and overdue-record count/oldest deadline.
+If the host, scheduler, or database is unavailable, deletion by the deadline cannot be guaranteed.
+After recovery, run cleanup and resume the hourly schedule; startup cleanup is an additional
+recovery safeguard. Do not claim unconditional deletion when the scheduler or host is unavailable.
 
 **Rejected alternatives**: Indefinite retention, external database infrastructure, or relying only
 on manual deletion.
