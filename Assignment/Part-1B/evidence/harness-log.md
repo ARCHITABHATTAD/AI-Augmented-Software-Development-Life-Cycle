@@ -238,4 +238,4 @@
   - `system_verification`: **PASS**
 - Meaningful failure records: 0
 - Repair actions recorded in this run: none.
-- Human decision: **PENDING** (reviewer decision required; the runner does not invent acceptance).
+- Human decision: **ACCEPT** (reviewer decision required; the runner does not invent acceptance).
