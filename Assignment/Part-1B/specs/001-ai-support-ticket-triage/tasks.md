@@ -16,23 +16,24 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 - `[US1]`, `[US2]`, and `[US3]` map to the specification's user stories. `[Shared]` is cross-cutting.
 - Dependencies refer to task IDs; no dependency means the task can start when its phase is ready.
 - Implementation, testing, evaluation, and evidence tasks are grouped separately.
-- All tasks are unchecked. This file is a plan, not evidence that implementation or evaluation ran.
+- Checked tasks reflect implementation and verification performed. The final human review remains
+  pending and is not represented as complete.
 
 ## Phase 1: Project setup and configuration
 
 **Purpose**: Establish a reproducible Python 3.12 project and protect local configuration.
 
-- [ ] T001 [P] [Shared] Create the planned `src/`, `prompts/`, `tests/`, `evals/`, `.harness/`,
+- [x] T001 [P] [Shared] Create the planned `src/`, `prompts/`, `tests/`, `evals/`, `.harness/`,
   and `evidence/` directory structure at the Part-1B project root (FR-012, FR-013, SC-003,
   SC-006).
-- [ ] T002 [P] [Shared] Add `requirements.txt` for the planned Python 3.12 runtime, FastAPI,
+- [x] T002 [P] [Shared] Add `requirements.txt` for the planned Python 3.12 runtime, FastAPI,
   Pydantic, `jsonschema`, pytest/httpx, and the chosen configurable-provider adapter; do not add
   unrelated dependencies (FR-013).
-- [ ] T003 [P] [Shared] Add `.env.example` containing variable names and clearly non-secret
+- [x] T003 [P] [Shared] Add `.env.example` containing variable names and clearly non-secret
   placeholder values for application-provider configuration, semantic-evaluator model/rubric
   configuration, and local authentication secrets; include no real credentials (FR-015, FR-013,
   SC-007).
-- [ ] T004 [P] [Shared] Add `.gitignore` entries for virtual environments, Python/test caches,
+- [x] T004 [P] [Shared] Add `.gitignore` entries for virtual environments, Python/test caches,
   local SQLite databases, `.env`, and temporary generated outputs; do not ignore required
   `evidence/` deliverables (FR-015).
 
@@ -40,12 +41,12 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 
 **Purpose**: Implement types that exactly reflect the approved nine-field contract.
 
-- [ ] T005 [P] [US1] Implement typed category, priority, sentiment, and department enums plus the
+- [x] T005 [P] [US1] Implement typed category, priority, sentiment, and department enums plus the
   category-to-department mapping in `src/domain/enums.py` (FR-002–FR-005, SC-002, SC-004).
-- [ ] T006 [US1] Implement the Pydantic triage-result model in `src/domain/triage.py`, matching
+- [x] T006 [US1] Implement the Pydantic triage-result model in `src/domain/triage.py`, matching
   all nine fields, nullability, non-empty strings, and no-extra-fields behavior in
   `contracts/triage-result.schema.json` (FR-006, FR-007, FR-011, SC-001).
-- [ ] T007 [P] [US1] Add contract tests comparing the Pydantic model behavior with
+- [x] T007 [P] [US1] Add contract tests comparing the Pydantic model behavior with
   `contracts/triage-result.schema.json`, including department mapping and conditional
   clarification-question behavior, in `tests/contract/test_triage_contract.py` (FR-005, FR-007,
   SC-001, SC-002).
@@ -54,15 +55,15 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 
 **Purpose**: Implement message validation, classification decisions, clarification, and safety rules.
 
-- [ ] T008 [P] [US1] Implement incoming customer-message validation in
+- [x] T008 [P] [US1] Implement incoming customer-message validation in
   `src/domain/input_validation.py`; empty or whitespace-only input must fail before provider calls
   or persistence (depends on T001; FR-001, SC-002).
-- [ ] T009 [US1] Implement core triage orchestration in `src/domain/triage.py` using allowed
+- [x] T009 [US1] Implement core triage orchestration in `src/domain/triage.py` using allowed
   labels, risk/time-sensitivity priority criteria, sentiment evidence, and the department mapping
   (FR-002–FR-006, FR-011, SC-002, SC-004).
-- [ ] T010 [US1] Implement dominant-issue selection and focused clarification when multiple
+- [x] T010 [US1] Implement dominant-issue selection and focused clarification when multiple
   issues cannot be routed confidently; preserve best-supported labels (FR-002, FR-008, SC-002).
-- [ ] T011 [US2] Implement security-sensitive handling and prohibited-action guardrails in
+- [x] T011 [US2] Implement security-sensitive handling and prohibited-action guardrails in
   `src/domain/triage.py`: flag exposed secrets, suspected compromise/fraud for human review, never
   repeat exposed secrets, and never perform or claim a transaction/account modification
   (depends on T010; FR-009, FR-010, SC-002, SC-005).
@@ -71,13 +72,13 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 
 **Purpose**: Separate deterministic triage development from real application-provider calls.
 
-- [ ] T012 [P] [US1] Define the application-provider protocol and typed failure boundary in
+- [x] T012 [P] [US1] Define the application-provider protocol and typed failure boundary in
   `src/providers/base.py` (FR-006, FR-007, FR-013).
-- [ ] T013 [P] [US1] Implement deterministic `MockProvider` fixtures in
+- [x] T013 [P] [US1] Implement deterministic `MockProvider` fixtures in
   `src/providers/mock_provider.py` for offline development and repeatable tests, including a mode
   that injects an exact raw provider response from an evaluation fixture and bypasses real model
   calls; do not use it to generate semantic-evaluator scores (FR-013, FR-014).
-- [ ] T014 [US1] Implement the configurable real application-provider adapter in
+- [x] T014 [US1] Implement the configurable real application-provider adapter in
   `src/providers/configured_provider.py`, reading credentials only from environment configuration
   and enforcing timeouts and bounded retries (FR-006, FR-007, FR-013).
 
@@ -85,15 +86,15 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 
 **Purpose**: Constrain model instructions and reject malformed or unsafe provider responses.
 
-- [ ] T015 [US1] Write `prompts/triage.txt` covering labels, priority evidence, dominant issue,
+- [x] T015 [US1] Write `prompts/triage.txt` covering labels, priority evidence, dominant issue,
   clarification rules, rationale/response quality, JSON-only output, and safety guardrails; also
   write `prompts/semantic-evaluation.txt` implementing the fixed `spec.md` rubric for response
   quality, rationale quality, and safety/non-misleading content, with 1–5 scores and a brief reason
   for each dimension (depends on T009, T011; FR-002–FR-011, FR-013–FR-014, SC-005).
-- [ ] T016 [US1] Implement provider-output parsing in `src/domain/validation.py` with independent
+- [x] T016 [US1] Implement provider-output parsing in `src/domain/validation.py` with independent
   Pydantic and JSON Schema validation; reject surrounding prose, malformed JSON, missing/extra
   fields, and inconsistent conditional fields (depends on T006, T008; FR-007, FR-013, SC-001).
-- [ ] T017 [US1] Integrate prompt, provider, and both validation modules
+- [x] T017 [US1] Integrate prompt, provider, and both validation modules
   (`src/domain/input_validation.py` for incoming messages and `src/domain/validation.py` for model
   output) in the triage service; unavailable providers or malformed model output must produce safe
   explicit errors and no invented/persisted result (`src/domain/triage.py`; depends on T008–T016;
@@ -103,10 +104,10 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 
 **Purpose**: Restrict retained-record access to authenticated support reviewers.
 
-- [ ] T018 [US2] Implement local session or bearer-token authentication and role resolution in
+- [x] T018 [US2] Implement local session or bearer-token authentication and role resolution in
   `src/api/auth.py`, using environment-provided secrets and the authorized `support-reviewer` role
   (FR-015, SC-007).
-- [ ] T019 [US2] Implement reusable authorization enforcement for every retained-record read in
+- [x] T019 [US2] Implement reusable authorization enforcement for every retained-record read in
   `src/api/auth.py`; deny unauthenticated principals and authenticated users without the reviewer
   role (FR-015, SC-007).
 
@@ -114,9 +115,9 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 
 **Purpose**: Persist records only for the approved audit/quality window and enforce expiration.
 
-- [ ] T020 [US2] Implement SQLite schema and repository operations for retained messages/results,
+- [x] T020 [US2] Implement SQLite schema and repository operations for retained messages/results,
   UTC creation timestamps, and 30-day expiration in `src/persistence/database.py` (FR-015, SC-007).
-- [ ] T021 [US2] Implement `python -m src.persistence.retention --cleanup-expired` as an
+- [x] T021 [US2] Implement `python -m src.persistence.retention --cleanup-expired` as an
   independently schedulable cleanup command in `src/persistence/retention.py`; delete records at
   or past `delete_after`, and document an external host scheduler running it at least hourly
   independently of the API process. Keep startup cleanup as an additional safeguard. Log
@@ -128,13 +129,13 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 
 **Purpose**: Expose the triage and authorized retained-record workflows.
 
-- [ ] T022 [US1] Implement `POST /triage` in `src/api/routes.py`; reject blank input before
+- [x] T022 [US1] Implement `POST /triage` in `src/api/routes.py`; reject blank input before
   provider invocation and persistence, return exactly the validated JSON result, and retain valid
   outputs as specified (FR-001, FR-007, FR-015, SC-001).
-- [ ] T023 [US2] Implement retained-record read endpoint(s) in `src/api/routes.py`, enforcing
+- [x] T023 [US2] Implement retained-record read endpoint(s) in `src/api/routes.py`, enforcing
   authentication and reviewer-role checks on each access and hiding expired records (FR-015,
   SC-007; depends on T019–T022).
-- [ ] T024 [US1] Add centralized safe error mapping in `src/api/app.py` for invalid input,
+- [x] T024 [US1] Add centralized safe error mapping in `src/api/app.py` for invalid input,
   unavailable provider, malformed provider output, and internal failures; do not expose secrets,
   stack traces, or success-shaped fallback results (FR-001, FR-007, FR-010).
 
@@ -142,32 +143,32 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 
 **Purpose**: Verify implementation behavior independently of evaluation-dataset scoring.
 
-- [ ] T025 [P] [US1] Add unit tests for empty and whitespace-only input, including assertions that
+- [x] T025 [P] [US1] Add unit tests for empty and whitespace-only input, including assertions that
   no provider call or record creation occurs, in `tests/unit/test_input_validation.py`
   (FR-001, SC-002).
-- [ ] T026 [P] [US1] Add tests for malformed JSON, prose-wrapped output, missing/extra fields,
+- [x] T026 [P] [US1] Add tests for malformed JSON, prose-wrapped output, missing/extra fields,
   invalid enum values, and provider-unavailable errors in
   `tests/contract/test_provider_output.py` (FR-007, FR-013, SC-001).
-- [ ] T027 [P] [US1] Add triage tests for each category, priority boundary, sentiment, and
+- [x] T027 [P] [US1] Add triage tests for each category, priority boundary, sentiment, and
   category-to-department mapping in `tests/unit/test_triage.py` (FR-002–FR-005, SC-002, SC-004).
-- [ ] T028 [P] [US1] Add explicit multiple-issue, contradictory-evidence, and focused-clarification
+- [x] T028 [P] [US1] Add explicit multiple-issue, contradictory-evidence, and focused-clarification
   tests in `tests/behavioral/test_multiple_issues.py` (FR-002, FR-008, SC-002).
-- [ ] T029 [P] [US2] Add security-sensitive tests for exposed credentials, suspected compromise,
+- [x] T029 [P] [US2] Add security-sensitive tests for exposed credentials, suspected compromise,
   and suspected fraud; assert human-review flags and no secret repetition in
   `tests/behavioral/test_security_sensitive.py` (FR-009, SC-002, SC-005).
-- [ ] T030 [P] [US2] Add prohibited-action tests for transaction and account-modification requests;
+- [x] T030 [P] [US2] Add prohibited-action tests for transaction and account-modification requests;
   assert no execution or completion claim in `tests/behavioral/test_prohibited_actions.py`
   (FR-010, SC-002, SC-005).
-- [ ] T031 [P] [US2] Add integration tests for authenticated reviewer success, unauthenticated
+- [x] T031 [P] [US2] Add integration tests for authenticated reviewer success, unauthenticated
   denial, and authenticated unauthorized-role denial in
   `tests/security/test_reviewer_access.py` (depends on T018, T019, T020, T023; FR-015, SC-007).
-- [ ] T032 [P] [US2] Add integration tests proving 30-day expiration deletes a record and prevents
+- [x] T032 [P] [US2] Add integration tests proving 30-day expiration deletes a record and prevents
   retrieval; verify cleanup failures are observable, overdue records are reported, and cleanup can
   be retried after recovery in `tests/integration/test_retention.py` (FR-015, SC-007).
-- [ ] T033 [US1] Add FastAPI integration tests for valid triage JSON, 422 empty input, 503 provider
+- [x] T033 [US1] Add FastAPI integration tests for valid triage JSON, 422 empty input, 503 provider
   failure, and no persistence on rejected or malformed requests in
   `tests/integration/test_triage_api.py` (FR-001, FR-007, FR-015, SC-001, SC-002).
-- [ ] T034 [Shared] Run and document the targeted unit, contract, integration, and security suites;
+- [x] T034 [Shared] Run and document the targeted unit, contract, integration, and security suites;
   fix only failures in scope and retain regression tests (`README.md` test instructions)
   (FR-001–FR-016, SC-001–SC-008).
 
@@ -175,13 +176,13 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 
 **Purpose**: Establish reviewed and traceable test cases before running aggregate evaluation.
 
-- [ ] T035 [US3] Create `evals/dataset.json` with at least 15 meaningful cases spanning all
+- [x] T035 [US3] Create `evals/dataset.json` with at least 15 meaningful cases spanning all
   categories and priority levels, normal/boundary/ambiguous/underspecified/missing-information/
   malformed-provider-output/security-sensitive/adversarial cases, multiple issues, and prohibited
   actions. Represent malformed provider output with a raw-response fixture sent through the
   deterministic fake provider, bypassing a real model call; keep the customer message valid
   (FR-012, SC-003).
-- [ ] T036 [US3] Add stable case IDs, reviewed expected labels/assertions, semantic expectations,
+- [x] T036 [US3] Add stable case IDs, reviewed expected labels/assertions, semantic expectations,
   expected outcome, and FR/SC plus behavioral-invariant traceability IDs to every case. Require a
   deterministic raw provider-output fixture for malformed-provider-output cases (optional for
   others), and validate those cases use valid customer messages in
@@ -191,7 +192,7 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 
 **Purpose**: Independently verify raw output shape and schema conformance.
 
-- [ ] T037 [US3] Implement `src/evaluation/structural_evaluator.py` to parse output, enforce
+- [x] T037 [US3] Implement `src/evaluation/structural_evaluator.py` to parse output, enforce
   exactly the nine required fields and Draft 2020-12 schema, and report case-level failure codes.
   Execute malformed-provider-output fixtures through the deterministic fake provider, record the
   raw response's structural failure, and mark the case PASS only when the application safely
@@ -202,7 +203,7 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 
 **Purpose**: Deterministically check safety and behavioral properties without model scoring.
 
-- [ ] T038 [US3] Implement `src/evaluation/behavioral_evaluator.py` for allowed values, department
+- [x] T038 [US3] Implement `src/evaluation/behavioral_evaluator.py` for allowed values, department
   mapping, clarification conditions, security flags/secret non-repetition, prohibited actions,
   dominant-issue handling, invalid-input rejection, and retention/access properties (FR-001–FR-002,
   FR-005, FR-007–FR-010, FR-015, SC-001, SC-002, SC-007).
@@ -211,7 +212,7 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 
 **Purpose**: Report independent agreement for each classification field.
 
-- [ ] T039 [US3] Implement `src/evaluation/classification_evaluator.py` comparing category,
+- [x] T039 [US3] Implement `src/evaluation/classification_evaluator.py` comparing category,
   priority, sentiment, and department with reviewed expectations; report each per-field rate and
   case mismatch (FR-013, SC-004, SC-006, SC-008).
 
@@ -219,11 +220,11 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 
 **Purpose**: Score semantic quality with the configured model, never a mock or fabricated result.
 
-- [ ] T040 [US3] Implement `src/evaluation/semantic_evaluator.py` using the fixed rubric and
+- [x] T040 [US3] Implement `src/evaluation/semantic_evaluator.py` using the fixed rubric and
   separately configured, pinned semantic-evaluator model; score response, rationale, and safety
   dimensions from 1–5 with a brief reason for each (depends on T003, T015, T035, T036; FR-013,
   FR-014, SC-005, SC-006).
-- [ ] T041 [US3] Validate evaluator model identity/configuration and returned scores/reasons;
+- [x] T041 [US3] Validate evaluator model identity/configuration and returned scores/reasons;
   report missing credentials or unavailable evaluator as `BLOCKED` and invalid/incomplete
   evaluator output as `INCOMPLETE`, never substituting scores (`src/evaluation/semantic_evaluator.py`,
   `tests/evaluation/test_semantic_status.py`) (FR-013, FR-014, SC-005, SC-006).
@@ -232,14 +233,14 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 
 **Purpose**: Run all mandatory layers and system-level verification with an honest aggregate status.
 
-- [ ] T042 [US3] Implement `src/evaluation/runner.py` to execute structural, behavioral,
+- [x] T042 [US3] Implement `src/evaluation/runner.py` to execute structural, behavioral,
   classification, semantic, and separate system-level authentication/retention verification
   groups and report each independently (FR-013, FR-015, FR-016, SC-006–SC-008).
-- [ ] T043 [US3] Implement aggregate metrics and the predeclared thresholds: schema 100%,
+- [x] T043 [US3] Implement aggregate metrics and the predeclared thresholds: schema 100%,
   behavioral 100%, each classification field at least 80%, each semantic dimension mean at least
   4.0/5, and no security-sensitive/prohibited-action safety score below 4/5
   (`src/evaluation/report.py`) (FR-013, FR-014, SC-001–SC-006).
-- [ ] T044 [P] [US3] Add runner/report tests for `PASS`, `FAIL`, `BLOCKED`, and `INCOMPLETE`;
+- [x] T044 [P] [US3] Add runner/report tests for `PASS`, `FAIL`, `BLOCKED`, and `INCOMPLETE`;
   verify overall `PASS` is impossible unless every mandatory layer and system-level check
   completes and meets thresholds (`tests/evaluation/test_runner_status.py`) (FR-013, FR-016,
   SC-001, SC-002, SC-006, SC-008).
@@ -248,7 +249,7 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 
 **Purpose**: Use meaningful evaluation evidence to drive narrow fixes without weakening acceptance.
 
-- [ ] T045 [US3] Implement failure handoff records with case ID, input, generated output, failed
+- [x] T045 [US3] Implement failure handoff records with case ID, input, generated output, failed
   requirement/invariant/check, expected/actual behavior, and suggested repair area; preserve hard
   cases and thresholds on every rerun (`src/evaluation/report.py`,
   `.harness/run-evaluation.py`) (FR-013, FR-016, SC-006, SC-008).
@@ -257,7 +258,7 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 
 **Purpose**: Record real evaluation runs and human review without fabricated results.
 
-- [ ] T046 [US3] Implement evidence output to `evidence/initial-generation/`,
+- [x] T046 [US3] Implement evidence output to `evidence/initial-generation/`,
   `evidence/final-generation/`, `evidence/eval-results.json`, and
   `evidence/harness-log.md`; record provider/evaluator model and rubric configuration without
   secrets, all layer/system statuses, thresholds, failures, repairs, and reruns (FR-013, FR-016,
@@ -270,12 +271,12 @@ description: "Dependency-aware implementation tasks for AI Customer Support Tick
 
 **Purpose**: Make the assignment reproducible and verify required deliverables.
 
-- [ ] T048 [P] [Shared] Write root `README.md` with Python 3.12 installation, environment
+- [x] T048 [P] [Shared] Write root `README.md` with Python 3.12 installation, environment
   configuration, application startup, test commands, evaluation commands, and the distinction
   between mock application provider and fixed semantic evaluator; document hourly retention
   scheduler setup, monitoring, outage limitations, and recovery (depends on T002–T004, T034,
   T042; FR-013, FR-015).
-- [ ] T049 [Shared] Verify required files/directories, clean secret handling, test commands,
+- [x] T049 [Shared] Verify required files/directories, clean secret handling, test commands,
   dataset traceability, all declared thresholds, evidence status semantics, and submission layout;
   document unresolved limitations without claiming unrun features passed (FR-001–FR-016,
   SC-001–SC-008).

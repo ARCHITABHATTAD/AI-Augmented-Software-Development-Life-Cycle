@@ -14,6 +14,10 @@ Authenticate with a local session or bearer token mapped to `support-reviewer`.
 
 - Unauthenticated reads return 401.
 - Authenticated non-reviewers return 403.
+- For interactive use, open `/docs`, select **Authorize**, paste the configured support-reviewer token
+  without the `Bearer ` prefix,
+  then call `GET /retained/{record_id}` with the UUID returned in the `X-Record-ID` response header
+  from `POST /triage`. Do not use a numeric ID or omit the bearer token.
 - Records expire no later than 30 days after creation.
 - Configure the host scheduler (for example, Windows Task Scheduler or cron) to run
   `python -m src.persistence.retention --cleanup-expired` at least hourly. The cleanup process

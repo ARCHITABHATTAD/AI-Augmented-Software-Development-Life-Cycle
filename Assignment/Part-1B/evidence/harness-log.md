@@ -1,0 +1,218 @@
+## Initial evaluation — 2026-11-21T14:22:48+00:00
+
+- Runner version: `1.0.0`
+- Application provider: `deterministic_mock_for_evaluation` (no credentials used)
+- Semantic evaluator model: `NOT_CONFIGURED`
+- Semantic rubric version: `1`
+- Secrets recorded: no
+- Overall result: **FAIL**
+- Thresholds:
+  - `json_schema_conformance`: `1.0`
+  - `behavioral_invariant_pass_rate`: `1.0`
+  - `classification_agreement_per_field`: `0.8`
+  - `semantic_mean_per_dimension`: `4.0`
+  - `security_prohibited_safety_minimum`: `4`
+- Evaluation/system statuses:
+  - `structural`: **PASS**
+  - `behavioral`: **FAIL**
+  - `classification`: **FAIL**
+  - `semantic`: **BLOCKED**
+  - `system_verification`: **PASS**
+- Meaningful failure records: 2
+- Initial failure details (preserved from the initial case outputs):
+  - `underspecified-general-help` — `BI-002_CLARIFICATION_EXPECTATION`; expected clarification for "Please help.", actual `false`; traceability: `FR-002`, `FR-006`, `FR-008`, `FR-016`, `SC-001`, `SC-002`, `SC-004`, `SC-005`, `SC-008`, `BI-002`. Repair area: underspecified-message clarification handling.
+  - `technical-app-crash` — `CLASSIFICATION_SENTIMENT_AGREEMENT`; expected sentiment `NEGATIVE`, actual `NEUTRAL`; traceability: `FR-002`, `FR-004`, `FR-005`, `FR-006`, `FR-011`, `FR-016`, `SC-001`, `SC-002`, `SC-004`, `SC-005`, `SC-008`, `FR-008`, `BI-001`, `BI-002`. Repair area: negative-sentiment detection.
+- Semantic evaluator limitation: Semantic evaluator model, endpoint, or credentials are not configured.
+- Repair actions recorded in this run: none.
+- Human decision: **PENDING** (reviewer decision required; the runner does not invent acceptance).
+## Final evaluation — 2026-11-21T14:26:31+00:00
+
+- Runner version: `1.0.0`
+- Application provider: `deterministic_mock_for_evaluation` (no credentials used)
+- Semantic evaluator model: `NOT_CONFIGURED`
+- Semantic rubric version: `1`
+- Secrets recorded: no
+- Overall result: **BLOCKED**
+- Thresholds:
+  - `json_schema_conformance`: `1.0`
+  - `behavioral_invariant_pass_rate`: `1.0`
+  - `classification_agreement_per_field`: `0.8`
+  - `semantic_mean_per_dimension`: `4.0`
+  - `security_prohibited_safety_minimum`: `4`
+- Evaluation/system statuses:
+  - `structural`: **PASS**
+  - `behavioral`: **PASS**
+  - `classification`: **PASS**
+  - `semantic`: **BLOCKED**
+  - `system_verification`: **PASS**
+- Meaningful failure records: 0
+- Semantic evaluator limitation: Semantic evaluator model, endpoint, or credentials are not configured.
+- Repair actions recorded in this run: none.
+- Human decision: **PENDING** (reviewer decision required; the runner does not invent acceptance).
+## Final evaluation — 2026-11-21T16:43:00+00:00
+
+- Runner version: `1.0.0`
+- Application provider: `deterministic_mock_for_evaluation` (no credentials used)
+- Semantic evaluator model: `NOT_CONFIGURED`
+- Semantic rubric version: `1`
+- Secrets recorded: no
+- Overall result: **BLOCKED**
+- Thresholds:
+  - `json_schema_conformance`: `1.0`
+  - `behavioral_invariant_pass_rate`: `1.0`
+  - `classification_agreement_per_field`: `0.8`
+  - `semantic_mean_per_dimension`: `4.0`
+  - `security_prohibited_safety_minimum`: `4`
+- Evaluation/system statuses:
+  - `structural`: **PASS**
+  - `behavioral`: **PASS**
+  - `classification`: **PASS**
+  - `semantic`: **BLOCKED**
+  - `system_verification`: **PASS**
+- Meaningful failure records: 0
+- Semantic evaluator limitation: Semantic evaluator model, endpoint, or credentials are not configured.
+- Repair actions recorded in this run: Corrected deterministic mock matching for underspecified punctuation and negative sentiment.; Ran evaluation cases through FastAPI and checked persistence for accepted and rejected outputs.; Pinned semantic rubric version validation and added valid, invalid, and unavailable evaluator coverage.; Added phase-specific evaluation reports and repair-action evidence logging.
+- Human decision: **PENDING** (reviewer decision required; the runner does not invent acceptance).
+## Final evaluation — 2026-11-22T13:40:11+00:00
+
+- Runner version: `1.0.0`
+- Application provider: `deterministic_mock_for_evaluation` (no credentials used)
+- Semantic evaluator model: `openai/gpt-oss-20b`
+- Semantic rubric version: `1`
+- Secrets recorded: no
+- Overall result: **INCOMPLETE**
+- Thresholds:
+  - `json_schema_conformance`: `1.0`
+  - `behavioral_invariant_pass_rate`: `1.0`
+  - `classification_agreement_per_field`: `0.8`
+  - `semantic_mean_per_dimension`: `4.0`
+  - `security_prohibited_safety_minimum`: `4`
+- Evaluation/system statuses:
+  - `structural`: **PASS**
+  - `behavioral`: **PASS**
+  - `classification`: **PASS**
+  - `semantic`: **INCOMPLETE**
+  - `system_verification`: **PASS**
+- Meaningful failure records: 0
+- Semantic evaluator limitation: Semantic evaluator returned invalid or incomplete output (ValueError).
+- Repair actions recorded in this run: none.
+- Human decision: **PENDING** (reviewer decision required; the runner does not invent acceptance).
+## Final evaluation — 2026-11-22T13:53:43+00:00
+
+- Runner version: `1.0.0`
+- Application provider: `deterministic_mock_for_evaluation` (no credentials used)
+- Semantic evaluator model: `openai/gpt-oss-20b`
+- Semantic rubric version: `1`
+- Secrets recorded: no
+- Overall result: **INCOMPLETE**
+- Thresholds:
+  - `json_schema_conformance`: `1.0`
+  - `behavioral_invariant_pass_rate`: `1.0`
+  - `classification_agreement_per_field`: `0.8`
+  - `semantic_mean_per_dimension`: `4.0`
+  - `security_prohibited_safety_minimum`: `4`
+- Evaluation/system statuses:
+  - `structural`: **PASS**
+  - `behavioral`: **PASS**
+  - `classification`: **PASS**
+  - `semantic`: **INCOMPLETE**
+  - `system_verification`: **PASS**
+- Meaningful failure records: 0
+- Semantic evaluator limitation: Semantic evaluator returned invalid or incomplete output: ValueError: Each semantic dimension must contain score and reason.
+- Repair actions recorded in this run: none.
+- Human decision: **PENDING** (reviewer decision required; the runner does not invent acceptance).
+## Final evaluation — 2026-11-22T14:01:11+00:00
+
+- Runner version: `1.0.0`
+- Application provider: `deterministic_mock_for_evaluation` (no credentials used)
+- Semantic evaluator model: `openai/gpt-oss-20b`
+- Semantic rubric version: `1`
+- Secrets recorded: no
+- Overall result: **BLOCKED**
+- Thresholds:
+  - `json_schema_conformance`: `1.0`
+  - `behavioral_invariant_pass_rate`: `1.0`
+  - `classification_agreement_per_field`: `0.8`
+  - `semantic_mean_per_dimension`: `4.0`
+  - `security_prohibited_safety_minimum`: `4`
+- Evaluation/system statuses:
+  - `structural`: **PASS**
+  - `behavioral`: **PASS**
+  - `classification`: **PASS**
+  - `semantic`: **BLOCKED**
+  - `system_verification`: **PASS**
+- Meaningful failure records: 0
+- Semantic evaluator limitation: Semantic evaluator request failed (HTTPStatusError).
+- Repair actions recorded in this run: none.
+- Human decision: **PENDING** (reviewer decision required; the runner does not invent acceptance).
+## Final evaluation — 2026-11-22T14:24:47+00:00
+
+- Runner version: `1.0.0`
+- Application provider: `deterministic_mock_for_evaluation` (no credentials used)
+- Semantic evaluator model: `openai/gpt-oss-20b`
+- Semantic rubric version: `1`
+- Secrets recorded: no
+- Overall result: **BLOCKED**
+- Thresholds:
+  - `json_schema_conformance`: `1.0`
+  - `behavioral_invariant_pass_rate`: `1.0`
+  - `classification_agreement_per_field`: `0.8`
+  - `semantic_mean_per_dimension`: `4.0`
+  - `security_prohibited_safety_minimum`: `4`
+- Evaluation/system statuses:
+  - `structural`: **PASS**
+  - `behavioral`: **PASS**
+  - `classification`: **PASS**
+  - `semantic`: **BLOCKED**
+  - `system_verification`: **PASS**
+- Meaningful failure records: 0
+- Semantic evaluator limitation: Semantic evaluator request failed (HTTP 429; code=rate_limit_exceeded; retry_after=9).
+- Repair actions recorded in this run: none.
+- Human decision: **PENDING** (reviewer decision required; the runner does not invent acceptance).
+## Final evaluation — 2026-11-22T14:33:27+00:00
+
+- Runner version: `1.0.0`
+- Application provider: `deterministic_mock_for_evaluation` (no credentials used)
+- Semantic evaluator model: `openai/gpt-oss-20b`
+- Semantic rubric version: `1`
+- Secrets recorded: no
+- Overall result: **BLOCKED**
+- Thresholds:
+  - `json_schema_conformance`: `1.0`
+  - `behavioral_invariant_pass_rate`: `1.0`
+  - `classification_agreement_per_field`: `0.8`
+  - `semantic_mean_per_dimension`: `4.0`
+  - `security_prohibited_safety_minimum`: `4`
+- Evaluation/system statuses:
+  - `structural`: **PASS**
+  - `behavioral`: **PASS**
+  - `classification`: **PASS**
+  - `semantic`: **BLOCKED**
+  - `system_verification`: **PASS**
+- Meaningful failure records: 0
+- Semantic evaluator limitation: Semantic evaluator request failed (HTTP 429; code=rate_limit_exceeded; retry_after=10).
+- Repair actions recorded in this run: none.
+- Human decision: **PENDING** (reviewer decision required; the runner does not invent acceptance).
+## Final evaluation — 2026-11-22T14:51:24+00:00
+
+- Runner version: `1.0.0`
+- Application provider: `deterministic_mock_for_evaluation` (no credentials used)
+- Semantic evaluator model: `openai/gpt-oss-20b`
+- Semantic rubric version: `1`
+- Secrets recorded: no
+- Overall result: **PASS**
+- Thresholds:
+  - `json_schema_conformance`: `1.0`
+  - `behavioral_invariant_pass_rate`: `1.0`
+  - `classification_agreement_per_field`: `0.8`
+  - `semantic_mean_per_dimension`: `4.0`
+  - `security_prohibited_safety_minimum`: `4`
+- Evaluation/system statuses:
+  - `structural`: **PASS**
+  - `behavioral`: **PASS**
+  - `classification`: **PASS**
+  - `semantic`: **PASS**
+  - `system_verification`: **PASS**
+- Meaningful failure records: 0
+- Repair actions recorded in this run: none.
+- Human decision: **PENDING** (reviewer decision required; the runner does not invent acceptance).

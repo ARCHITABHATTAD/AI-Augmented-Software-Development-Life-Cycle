@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Support Triage Console</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">ST</div>
+          <div>
+            <strong>Support Triage</strong>
+            <span>Operations console</span>
+          </div>
+        </div>
+        <nav class="nav-list" aria-label="Main navigation">
+          <button class="nav-item active" type="button" data-section="triage">
+            <span class="nav-icon" aria-hidden="true">✦</span>
+            New triage
+          </button>
+          <button class="nav-item" type="button" data-section="record">
+            <span class="nav-icon" aria-hidden="true">↗</span>
+            Retained records
+          </button>
+        </nav>
+        <div class="privacy-note">
+          <span class="status-dot"></span>
+          <div><strong>Privacy active</strong><span>30-day retention</span></div>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Support operations</p>
+            <h1 id="pageTitle">Ticket triage</h1>
+          </div>
+          <div class="api-status"><span></span> API connected</div>
+        </header>
+
+        <section class="section active" id="triageSection">
+          <div class="workspace-grid">
+            <article class="card compose-card">
+              <div class="card-header">
+                <div>
+                  <p class="section-kicker">Customer message</p>
+                  <h2>Analyze a support request</h2>
+                </div>
+              </div>
+              <form id="triageForm">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="12" maxlength="5000"
+                  placeholder="Describe the customer's issue..."
+                  required></textarea>
+                <div class="field-meta"><span id="charCount">0 characters</span><span>Never include passwords or security codes</span></div>
+                <button class="primary-button" id="triageButton" type="submit">
+                  <span>Run triage</span><span aria-hidden="true">→</span>
+                </button>
+              </form>
+            </article>
+
+            <aside class="result-panel" id="triageResult" aria-live="polite">
+              <div class="empty-state">
+                <div class="empty-icon" aria-hidden="true">◎</div>
+                <h2>Ready for analysis</h2>
+                <p>Enter a customer message to generate a structured triage result.</p>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="section" id="recordSection">
+          <div class="record-layout">
+            <article class="card lookup-card">
+              <div class="card-header">
+                <div>
+                  <p class="section-kicker">Authorized access</p>
+                  <h2>Retained record lookup</h2>
+                </div>
+              </div>
+              <form id="recordForm">
+                <label for="recordId">Record ID</label>
+                <input id="recordId" name="recordId" type="text"
+                  placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" required />
+                <label for="reviewerToken">Reviewer token</label>
+                <div class="password-field">
+                  <input id="reviewerToken" name="reviewerToken" type="password"
+                    placeholder="Enter bearer token" autocomplete="off" required />
+                  <button type="button" id="toggleToken" aria-label="Show reviewer token">Show</button>
+                </div>
+                <button class="primary-button" type="submit">
+                  <span>Retrieve record</span><span aria-hidden="true">→</span>
+                </button>
+              </form>
+            </article>
+            <aside class="card record-result" id="recordResult" aria-live="polite">
+              <div class="empty-state">
+                <div class="empty-icon" aria-hidden="true">⌑</div>
+                <h2>No record loaded</h2>
+                <p>Authentication and an exact record ID are required.</p>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
