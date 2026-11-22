@@ -216,3 +216,26 @@
 - Meaningful failure records: 0
 - Repair actions recorded in this run: none.
 - Human decision: **PENDING** (reviewer decision required; the runner does not invent acceptance).
+## Final evaluation — 2026-11-22T15:25:20+00:00
+
+- Runner version: `1.0.0`
+- Application provider: `deterministic_mock_for_evaluation` (no credentials used)
+- Semantic evaluator model: `openai/gpt-oss-20b`
+- Semantic rubric version: `1`
+- Secrets recorded: no
+- Overall result: **PASS**
+- Thresholds:
+  - `json_schema_conformance`: `1.0`
+  - `behavioral_invariant_pass_rate`: `1.0`
+  - `classification_agreement_per_field`: `0.8`
+  - `semantic_mean_per_dimension`: `4.0`
+  - `security_prohibited_safety_minimum`: `4`
+- Evaluation/system statuses:
+  - `structural`: **PASS**
+  - `behavioral`: **PASS**
+  - `classification`: **PASS**
+  - `semantic`: **PASS**
+  - `system_verification`: **PASS**
+- Meaningful failure records: 0
+- Repair actions recorded in this run: none.
+- Human decision: **ACCEPT** (reviewer decision required; the runner does not invent acceptance).

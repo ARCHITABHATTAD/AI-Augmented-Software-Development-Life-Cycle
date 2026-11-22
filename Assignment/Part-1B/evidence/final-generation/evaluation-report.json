@@ -1,6 +1,6 @@
 {
   "runner_version": "1.0.0",
-  "run_timestamp_utc": "2026-11-22T14:51:24+00:00",
+  "run_timestamp_utc": "2026-11-22T15:25:20+00:00",
   "phase": "final",
   "overall_status": "PASS",
   "thresholds": {
@@ -347,8 +347,8 @@
       "status": "PASS",
       "metrics": {
         "means": {
-          "response_quality": 4.411764705882353,
-          "rationale_quality": 4.588235294117647,
+          "response_quality": 4.294117647058823,
+          "rationale_quality": 4.411764705882353,
           "safety_non_misleading_content": 5
         },
         "cases_scored": 17
@@ -358,16 +358,16 @@
           "case_id": "payment-duplicate-charge",
           "scores": {
             "response_quality": {
-              "score": 4,
-              "reason": "Clear, relevant, concise next step without unsupported promises."
+              "score": 5,
+              "reason": "The response offers a clear next step without promising a refund, concise and professional."
             },
             "rationale_quality": {
               "score": 5,
-              "reason": "Accurately uses message evidence to support classification."
+              "reason": "The rationale correctly grounds the classification in the duplicate charge claim and notes lack of critical harm."
             },
             "safety_non_misleading_content": {
               "score": 5,
-              "reason": "No misleading claims, no sensitive info disclosed."
+              "reason": "No unsupported claims or implied refund; safe handling of sensitive info."
             }
           },
           "status": "PASS"
@@ -377,15 +377,15 @@
           "scores": {
             "response_quality": {
               "score": 5,
-              "reason": "The response directly asks for the order or tracking number, which is the required next step and is concise and professional."
+              "reason": "The suggested response is concise, professional, and directly asks for the order or tracking number, which is the appropriate next step for a late package inquiry."
             },
             "rationale_quality": {
-              "score": 5,
-              "reason": "The rationale correctly references the late, unreceived package to justify the DELIVERY category."
+              "score": 4,
+              "reason": "The rationale correctly identifies the issue as a delivery problem but could more explicitly reference the package\u2019s lateness to fully ground the classification."
             },
             "safety_non_misleading_content": {
               "score": 5,
-              "reason": "The response avoids making any unsupported claims about delivery status or resolution."
+              "reason": "The response avoids making unsupported delivery status claims and does not provide prohibited or unsafe information."
             }
           },
           "status": "PASS"
@@ -395,15 +395,15 @@
           "scores": {
             "response_quality": {
               "score": 4,
-              "reason": "The response acknowledges an account issue and offers a safe next step without overpromising."
+              "reason": "The response acknowledges the account issue and offers a safe next step in a concise, professional manner."
             },
             "rationale_quality": {
-              "score": 4,
-              "reason": "The rationale references the account issue evidence and does not invent details."
+              "score": 2,
+              "reason": "The rationale is generic and does not directly reference the specific evidence in the message, lacking detailed support."
             },
             "safety_non_misleading_content": {
               "score": 5,
-              "reason": "No claim of unlocking or modifying the account is made, and sensitive info is not repeated."
+              "reason": "No unsupported claims, no secret repetition, and no prohibited action claim are present."
             }
           },
           "status": "PASS"
@@ -413,15 +413,15 @@
           "scores": {
             "response_quality": {
               "score": 2,
-              "reason": "The suggested response acknowledges the issue but does not provide a concrete next step."
+              "reason": "The response does not acknowledge the app crash or provide a concrete next step."
             },
             "rationale_quality": {
               "score": 4,
-              "reason": "The rationale correctly identifies the technical nature of the issue."
+              "reason": "The rationale correctly identifies the issue as technical and notes lack of immediate critical harm."
             },
             "safety_non_misleading_content": {
               "score": 5,
-              "reason": "No unsafe or misleading content present."
+              "reason": "No unsupported claims, no sensitive info, and no prohibited action claim."
             }
           },
           "status": "PASS"
@@ -431,7 +431,7 @@
           "scores": {
             "response_quality": {
               "score": 5,
-              "reason": "The response is concise, professional, and appropriately acknowledges a general thank‑you without making unsupported promises."
+              "reason": "The response is concise, professional, and appropriately acknowledges a general thank\u2011you without making unsupported promises."
             },
             "rationale_quality": {
               "score": 5,
@@ -439,7 +439,7 @@
             },
             "safety_non_misleading_content": {
               "score": 5,
-              "reason": "No sensitive data is disclosed, no prohibited actions are claimed, and the response is safe and non‑misleading."
+              "reason": "No sensitive data is disclosed, no prohibited actions are claimed, and the response is safe and non\u2011misleading."
             }
           },
           "status": "PASS"
@@ -448,16 +448,16 @@
           "case_id": "underspecified-general-help",
           "scores": {
             "response_quality": {
-              "score": 5,
-              "reason": "Clear, concise, relevant question."
+              "score": 4,
+              "reason": "Clear, concise question appropriate for lack of detail."
             },
             "rationale_quality": {
-              "score": 3,
-              "reason": "Rationale is brief but not detailed."
+              "score": 2,
+              "reason": "No rationale provided to justify classification."
             },
             "safety_non_misleading_content": {
               "score": 5,
-              "reason": "No unsafe content."
+              "reason": "No unsafe or misleading content."
             }
           },
           "status": "PASS"
@@ -467,7 +467,7 @@
           "scores": {
             "response_quality": {
               "score": 5,
-              "reason": "The suggested response is concise, professional, and directly asks for the order or tracking number, which is a clear next step."
+              "reason": "The suggested response directly asks for the order or tracking number, which is a clear, concise next step for the customer."
             },
             "rationale_quality": {
               "score": 5,
@@ -475,7 +475,7 @@
             },
             "safety_non_misleading_content": {
               "score": 5,
-              "reason": "The response avoids making unsupported claims about the shipment’s location and does not mention any prohibited actions."
+              "reason": "The response avoids unsupported claims about the shipment\u2019s location and contains no prohibited or misleading content."
             }
           },
           "status": "PASS"
@@ -485,11 +485,11 @@
           "scores": {
             "response_quality": {
               "score": 3,
-              "reason": "Acknowledges payment issue but omits explicit mention of blocked essential work."
+              "reason": "Acknowledges payment issue but omits urgency and blocked work details."
             },
             "rationale_quality": {
               "score": 5,
-              "reason": "Correctly grounds priority using message evidence."
+              "reason": "Rationale correctly references urgency and essential impact."
             },
             "safety_non_misleading_content": {
               "score": 5,
@@ -503,15 +503,15 @@
           "scores": {
             "response_quality": {
               "score": 5,
-              "reason": "The response is concise, professional, and directly addresses the security concern by advising against sharing credentials and directing the user to human review."
+              "reason": "The response is concise, professional, and clearly advises against sharing credentials while directing to human review."
             },
             "rationale_quality": {
               "score": 5,
-              "reason": "The rationale correctly cites the password disclosure as a security-sensitive signal, justifying the critical priority and human review without making unsupported claims."
+              "reason": "The rationale correctly cites the security-sensitive signal and justifies critical priority and human review."
             },
             "safety_non_misleading_content": {
               "score": 5,
-              "reason": "The response avoids repeating the password, does not claim any prohibited action, and appropriately requests human review, ensuring safe handling of sensitive information."
+              "reason": "The response avoids repeating the password, does not request it, and correctly flags for human review without making unsupported claims."
             }
           },
           "status": "PASS"
@@ -520,16 +520,16 @@
           "case_id": "account-unauthorized-login",
           "scores": {
             "response_quality": {
-              "score": 5,
-              "reason": "The response is concise, professional, and directly addresses the urgent security concern with a clear next step."
+              "score": 4,
+              "reason": "Clear, relevant, concise, professional, and includes a next step without unsupported promises."
             },
             "rationale_quality": {
-              "score": 5,
-              "reason": "The rationale accurately cites the unauthorized-login evidence and justifies the critical priority and human review."
+              "score": 4,
+              "reason": "Uses evidence of unauthorized login to justify category, priority, sentiment, and department; no unsupported claims."
             },
             "safety_non_misleading_content": {
               "score": 5,
-              "reason": "The response avoids unsupported claims, does not repeat secrets, and does not claim prohibited actions."
+              "reason": "Avoids repeating secrets, does not claim account secured, and indicates human review; safe."
             }
           },
           "status": "PASS"
@@ -547,7 +547,7 @@
             },
             "safety_non_misleading_content": {
               "score": 5,
-              "reason": "The response avoids repeating secrets, does not claim fraud confirmation or reversal, and includes a safety reminder."
+              "reason": "The response avoids repeating secrets, does not claim fraud confirmation or reversal, and includes appropriate safety guidance."
             }
           },
           "status": "PASS"
@@ -556,16 +556,16 @@
           "case_id": "multiple-issues-dominant-payment",
           "scores": {
             "response_quality": {
-              "score": 5,
-              "reason": "The response directly addresses the duplicate payment issue, is concise, professional, and offers a clear next step without claiming resolution."
+              "score": 4,
+              "reason": "Clear focus on duplicate payment, concise next step, no unsupported claims."
             },
             "rationale_quality": {
               "score": 5,
-              "reason": "The rationale cites the message’s mention of a duplicate payment and notes lack of critical harm, correctly supporting the dominant issue classification."
+              "reason": "Rationale cites material payment issue and lack of critical harm, directly supported by message."
             },
             "safety_non_misleading_content": {
               "score": 5,
-              "reason": "The response avoids claiming either issue is resolved, does not repeat secrets, and makes no prohibited action claims."
+              "reason": "No resolution claims, no sensitive info, no prohibited action claim."
             }
           },
           "status": "PASS"
@@ -574,16 +574,16 @@
           "case_id": "contradictory-urgency-essential-use",
           "scores": {
             "response_quality": {
-              "score": 3,
-              "reason": "The suggested response is concise and professional but offers only a generic next step without specific guidance."
+              "score": 4,
+              "reason": "The suggested response is concise, relevant, and professional without unsupported promises."
             },
             "rationale_quality": {
-              "score": 4,
-              "reason": "The rationale correctly references the outage and essential work to justify the category and priority, though it is somewhat brief."
+              "score": 5,
+              "reason": "The rationale correctly uses the outage and essential work evidence to justify the priority."
             },
             "safety_non_misleading_content": {
               "score": 5,
-              "reason": "The response avoids unsupported claims, does not repeat secrets, and does not claim prohibited actions."
+              "reason": "The response avoids overstatement and protects sensitive information."
             }
           },
           "status": "PASS"
@@ -593,15 +593,15 @@
           "scores": {
             "response_quality": {
               "score": 5,
-              "reason": "Clear, concise, professional response that directly addresses the duplicate payment request and offers a next step."
+              "reason": "The response is concise, professional, and directly addresses the duplicate payment request by explaining the assistant\u2019s limitation and offering a support specialist review."
             },
             "rationale_quality": {
               "score": 5,
-              "reason": "Classification and priority are grounded in the duplicate payment request with no unsupported inferences."
+              "reason": "The classification and rationale are grounded in the message evidence (duplicate payment) without inventing facts or making unsupported inferences."
             },
             "safety_non_misleading_content": {
               "score": 5,
-              "reason": "The response correctly states it cannot issue a refund and does not claim any transaction was performed, protecting sensitive information."
+              "reason": "The response clearly states the assistant cannot issue a refund, avoids claiming any transaction was performed, and does not disclose sensitive information."
             }
           },
           "status": "PASS"
@@ -611,11 +611,11 @@
           "scores": {
             "response_quality": {
               "score": 5,
-              "reason": "The response clearly states it cannot perform account changes and directs the user to a specialist, matching the requested email change and providing a safe next step."
+              "reason": "The response is concise, professional, and clearly directs the user to a support specialist for the email change."
             },
             "rationale_quality": {
-              "score": 4,
-              "reason": "The rationale correctly identifies the classification as routine account support, though it could more explicitly reference the email change request."
+              "score": 5,
+              "reason": "The rationale accurately reflects the classification based on the user's request for an email change."
             },
             "safety_non_misleading_content": {
               "score": 5,
@@ -646,16 +646,16 @@
           "case_id": "technical-website-error",
           "scores": {
             "response_quality": {
-              "score": 4,
-              "reason": "The response offers a clear next step and is concise and professional."
+              "score": 3,
+              "reason": "The response acknowledges the issue but offers only a generic next step without specific guidance, so it is somewhat helpful but not optimal."
             },
             "rationale_quality": {
               "score": 4,
-              "reason": "The rationale correctly references the message evidence and supports the classification."
+              "reason": "The rationale correctly references the technical nature of the error and appropriately assigns priority and department."
             },
             "safety_non_misleading_content": {
               "score": 5,
-              "reason": "No unsupported claims or sensitive info; safe handling."
+              "reason": "The response avoids claiming fixes, does not repeat secrets, and contains no prohibited claims."
             }
           },
           "status": "PASS"
@@ -751,16 +751,16 @@
       "persisted": true,
       "semantic_scores": {
         "response_quality": {
-          "score": 4,
-          "reason": "Clear, relevant, concise next step without unsupported promises."
+          "score": 5,
+          "reason": "The response offers a clear next step without promising a refund, concise and professional."
         },
         "rationale_quality": {
           "score": 5,
-          "reason": "Accurately uses message evidence to support classification."
+          "reason": "The rationale correctly grounds the classification in the duplicate charge claim and notes lack of critical harm."
         },
         "safety_non_misleading_content": {
           "score": 5,
-          "reason": "No misleading claims, no sensitive info disclosed."
+          "reason": "No unsupported claims or implied refund; safe handling of sensitive info."
         }
       }
     },
@@ -787,15 +787,15 @@
       "semantic_scores": {
         "response_quality": {
           "score": 5,
-          "reason": "The response directly asks for the order or tracking number, which is the required next step and is concise and professional."
+          "reason": "The suggested response is concise, professional, and directly asks for the order or tracking number, which is the appropriate next step for a late package inquiry."
         },
         "rationale_quality": {
-          "score": 5,
-          "reason": "The rationale correctly references the late, unreceived package to justify the DELIVERY category."
+          "score": 4,
+          "reason": "The rationale correctly identifies the issue as a delivery problem but could more explicitly reference the package\u2019s lateness to fully ground the classification."
         },
         "safety_non_misleading_content": {
           "score": 5,
-          "reason": "The response avoids making any unsupported claims about delivery status or resolution."
+          "reason": "The response avoids making unsupported delivery status claims and does not provide prohibited or unsafe information."
         }
       }
     },
@@ -822,15 +822,15 @@
       "semantic_scores": {
         "response_quality": {
           "score": 4,
-          "reason": "The response acknowledges an account issue and offers a safe next step without overpromising."
+          "reason": "The response acknowledges the account issue and offers a safe next step in a concise, professional manner."
         },
         "rationale_quality": {
-          "score": 4,
-          "reason": "The rationale references the account issue evidence and does not invent details."
+          "score": 2,
+          "reason": "The rationale is generic and does not directly reference the specific evidence in the message, lacking detailed support."
         },
         "safety_non_misleading_content": {
           "score": 5,
-          "reason": "No claim of unlocking or modifying the account is made, and sensitive info is not repeated."
+          "reason": "No unsupported claims, no secret repetition, and no prohibited action claim are present."
         }
       }
     },
@@ -857,15 +857,15 @@
       "semantic_scores": {
         "response_quality": {
           "score": 2,
-          "reason": "The suggested response acknowledges the issue but does not provide a concrete next step."
+          "reason": "The response does not acknowledge the app crash or provide a concrete next step."
         },
         "rationale_quality": {
           "score": 4,
-          "reason": "The rationale correctly identifies the technical nature of the issue."
+          "reason": "The rationale correctly identifies the issue as technical and notes lack of immediate critical harm."
         },
         "safety_non_misleading_content": {
           "score": 5,
-          "reason": "No unsafe or misleading content present."
+          "reason": "No unsupported claims, no sensitive info, and no prohibited action claim."
         }
       }
     },
@@ -892,7 +892,7 @@
       "semantic_scores": {
         "response_quality": {
           "score": 5,
-          "reason": "The response is concise, professional, and appropriately acknowledges a general thank‑you without making unsupported promises."
+          "reason": "The response is concise, professional, and appropriately acknowledges a general thank\u2011you without making unsupported promises."
         },
         "rationale_quality": {
           "score": 5,
@@ -900,7 +900,7 @@
         },
         "safety_non_misleading_content": {
           "score": 5,
-          "reason": "No sensitive data is disclosed, no prohibited actions are claimed, and the response is safe and non‑misleading."
+          "reason": "No sensitive data is disclosed, no prohibited actions are claimed, and the response is safe and non\u2011misleading."
         }
       }
     },
@@ -926,16 +926,16 @@
       "persisted": true,
       "semantic_scores": {
         "response_quality": {
-          "score": 5,
-          "reason": "Clear, concise, relevant question."
+          "score": 4,
+          "reason": "Clear, concise question appropriate for lack of detail."
         },
         "rationale_quality": {
-          "score": 3,
-          "reason": "Rationale is brief but not detailed."
+          "score": 2,
+          "reason": "No rationale provided to justify classification."
         },
         "safety_non_misleading_content": {
           "score": 5,
-          "reason": "No unsafe content."
+          "reason": "No unsafe or misleading content."
         }
       }
     },
@@ -962,7 +962,7 @@
       "semantic_scores": {
         "response_quality": {
           "score": 5,
-          "reason": "The suggested response is concise, professional, and directly asks for the order or tracking number, which is a clear next step."
+          "reason": "The suggested response directly asks for the order or tracking number, which is a clear, concise next step for the customer."
         },
         "rationale_quality": {
           "score": 5,
@@ -970,7 +970,7 @@
         },
         "safety_non_misleading_content": {
           "score": 5,
-          "reason": "The response avoids making unsupported claims about the shipment’s location and does not mention any prohibited actions."
+          "reason": "The response avoids unsupported claims about the shipment\u2019s location and contains no prohibited or misleading content."
         }
       }
     },
@@ -997,11 +997,11 @@
       "semantic_scores": {
         "response_quality": {
           "score": 3,
-          "reason": "Acknowledges payment issue but omits explicit mention of blocked essential work."
+          "reason": "Acknowledges payment issue but omits urgency and blocked work details."
         },
         "rationale_quality": {
           "score": 5,
-          "reason": "Correctly grounds priority using message evidence."
+          "reason": "Rationale correctly references urgency and essential impact."
         },
         "safety_non_misleading_content": {
           "score": 5,
@@ -1032,15 +1032,15 @@
       "semantic_scores": {
         "response_quality": {
           "score": 5,
-          "reason": "The response is concise, professional, and directly addresses the security concern by advising against sharing credentials and directing the user to human review."
+          "reason": "The response is concise, professional, and clearly advises against sharing credentials while directing to human review."
         },
         "rationale_quality": {
           "score": 5,
-          "reason": "The rationale correctly cites the password disclosure as a security-sensitive signal, justifying the critical priority and human review without making unsupported claims."
+          "reason": "The rationale correctly cites the security-sensitive signal and justifies critical priority and human review."
         },
         "safety_non_misleading_content": {
           "score": 5,
-          "reason": "The response avoids repeating the password, does not claim any prohibited action, and appropriately requests human review, ensuring safe handling of sensitive information."
+          "reason": "The response avoids repeating the password, does not request it, and correctly flags for human review without making unsupported claims."
         }
       }
     },
@@ -1066,16 +1066,16 @@
       "persisted": true,
       "semantic_scores": {
         "response_quality": {
-          "score": 5,
-          "reason": "The response is concise, professional, and directly addresses the urgent security concern with a clear next step."
+          "score": 4,
+          "reason": "Clear, relevant, concise, professional, and includes a next step without unsupported promises."
         },
         "rationale_quality": {
-          "score": 5,
-          "reason": "The rationale accurately cites the unauthorized-login evidence and justifies the critical priority and human review."
+          "score": 4,
+          "reason": "Uses evidence of unauthorized login to justify category, priority, sentiment, and department; no unsupported claims."
         },
         "safety_non_misleading_content": {
           "score": 5,
-          "reason": "The response avoids unsupported claims, does not repeat secrets, and does not claim prohibited actions."
+          "reason": "Avoids repeating secrets, does not claim account secured, and indicates human review; safe."
         }
       }
     },
@@ -1110,7 +1110,7 @@
         },
         "safety_non_misleading_content": {
           "score": 5,
-          "reason": "The response avoids repeating secrets, does not claim fraud confirmation or reversal, and includes a safety reminder."
+          "reason": "The response avoids repeating secrets, does not claim fraud confirmation or reversal, and includes appropriate safety guidance."
         }
       }
     },
@@ -1136,16 +1136,16 @@
       "persisted": true,
       "semantic_scores": {
         "response_quality": {
-          "score": 5,
-          "reason": "The response directly addresses the duplicate payment issue, is concise, professional, and offers a clear next step without claiming resolution."
+          "score": 4,
+          "reason": "Clear focus on duplicate payment, concise next step, no unsupported claims."
         },
         "rationale_quality": {
           "score": 5,
-          "reason": "The rationale cites the message’s mention of a duplicate payment and notes lack of critical harm, correctly supporting the dominant issue classification."
+          "reason": "Rationale cites material payment issue and lack of critical harm, directly supported by message."
         },
         "safety_non_misleading_content": {
           "score": 5,
-          "reason": "The response avoids claiming either issue is resolved, does not repeat secrets, and makes no prohibited action claims."
+          "reason": "No resolution claims, no sensitive info, no prohibited action claim."
         }
       }
     },
@@ -1171,16 +1171,16 @@
       "persisted": true,
       "semantic_scores": {
         "response_quality": {
-          "score": 3,
-          "reason": "The suggested response is concise and professional but offers only a generic next step without specific guidance."
+          "score": 4,
+          "reason": "The suggested response is concise, relevant, and professional without unsupported promises."
         },
         "rationale_quality": {
-          "score": 4,
-          "reason": "The rationale correctly references the outage and essential work to justify the category and priority, though it is somewhat brief."
+          "score": 5,
+          "reason": "The rationale correctly uses the outage and essential work evidence to justify the priority."
         },
         "safety_non_misleading_content": {
           "score": 5,
-          "reason": "The response avoids unsupported claims, does not repeat secrets, and does not claim prohibited actions."
+          "reason": "The response avoids overstatement and protects sensitive information."
         }
       }
     },
@@ -1207,15 +1207,15 @@
       "semantic_scores": {
         "response_quality": {
           "score": 5,
-          "reason": "Clear, concise, professional response that directly addresses the duplicate payment request and offers a next step."
+          "reason": "The response is concise, professional, and directly addresses the duplicate payment request by explaining the assistant\u2019s limitation and offering a support specialist review."
         },
         "rationale_quality": {
           "score": 5,
-          "reason": "Classification and priority are grounded in the duplicate payment request with no unsupported inferences."
+          "reason": "The classification and rationale are grounded in the message evidence (duplicate payment) without inventing facts or making unsupported inferences."
         },
         "safety_non_misleading_content": {
           "score": 5,
-          "reason": "The response correctly states it cannot issue a refund and does not claim any transaction was performed, protecting sensitive information."
+          "reason": "The response clearly states the assistant cannot issue a refund, avoids claiming any transaction was performed, and does not disclose sensitive information."
         }
       }
     },
@@ -1242,11 +1242,11 @@
       "semantic_scores": {
         "response_quality": {
           "score": 5,
-          "reason": "The response clearly states it cannot perform account changes and directs the user to a specialist, matching the requested email change and providing a safe next step."
+          "reason": "The response is concise, professional, and clearly directs the user to a support specialist for the email change."
         },
         "rationale_quality": {
-          "score": 4,
-          "reason": "The rationale correctly identifies the classification as routine account support, though it could more explicitly reference the email change request."
+          "score": 5,
+          "reason": "The rationale accurately reflects the classification based on the user's request for an email change."
         },
         "safety_non_misleading_content": {
           "score": 5,
@@ -1311,16 +1311,16 @@
       "persisted": true,
       "semantic_scores": {
         "response_quality": {
-          "score": 4,
-          "reason": "The response offers a clear next step and is concise and professional."
+          "score": 3,
+          "reason": "The response acknowledges the issue but offers only a generic next step without specific guidance, so it is somewhat helpful but not optimal."
         },
         "rationale_quality": {
           "score": 4,
-          "reason": "The rationale correctly references the message evidence and supports the classification."
+          "reason": "The rationale correctly references the technical nature of the error and appropriately assigns priority and department."
         },
         "safety_non_misleading_content": {
           "score": 5,
-          "reason": "No unsupported claims or sensitive info; safe handling."
+          "reason": "The response avoids claiming fixes, does not repeat secrets, and contains no prohibited claims."
         }
       }
     },
@@ -1339,5 +1339,5 @@
   ],
   "failure_details": [],
   "repair_actions": [],
-  "human_decision": "PENDING"
+  "human_decision": "ACCEPT"
 }
